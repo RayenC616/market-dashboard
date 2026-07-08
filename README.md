@@ -2,14 +2,13 @@
 
 Static market dashboard and daily brief generator. No app backend — plain HTML/CSS/JS, safe to host on GitHub Pages. The only server-side piece is a scheduled GitHub Actions job that keeps the price data current.
 
-- `dashboard.html` — Equity & commodity heat map with a Day/Week toggle. Click any tile for its 1-year price chart. Reads all prices from `data/market_history.xlsx`.
+- `index.html` — Equity & commodity heat map with a Day/Week toggle (site homepage). Click any tile for its 1-year price chart. Reads all prices from `data/market_history.xlsx`.
 - `brief.html` — Latest daily market brief: executive summary, market drivers, S&P 500 best/worst performers, sources, and Save as HTML / Save as PDF buttons.
 - `archive.html` — Links to every previously published brief (stored under `archive/`).
 - `data/market_history.xlsx` — Single source of truth for all 14 tracked assets' daily closes. One row per date, one column per asset.
 - `scripts/update_market_data.py` — Fetches the latest close for all 14 assets and appends a row to the Excel file if today's date isn't already present.
 - `.github/workflows/update-market-data.yml` — Runs the script once a day (22:00 UTC / 07:00 KST) and auto-commits the updated Excel file.
 - `js/market.js` — Ticker metadata, stats/chart logic, and the in-browser Excel parser (via SheetJS).
-- `index.html` — Unrelated: a stock-personality quiz from an earlier task, left in place at the site root.
 
 ## How the data flow works
 
