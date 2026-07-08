@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Global Markets Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
   :root{
     --navy:#0b1f3a; --navy2:#13294b; --gold:#b08d57; --pos:#0a7d3c; --neg:#b3261e;
@@ -106,7 +107,6 @@
 
 <footer>Data: Yahoo Finance (equity indices &amp; WTI/Gold/Silver/Copper/Corn/Wheat/Soybean futures), investing.com (Nickel). Not investment advice.</footer>
 
-<script src="js/raw_data.js"></script>
 <script src="js/market.js"></script>
 <script>
 let mode = { equity: "1D", commodity: "1D" };
@@ -160,8 +160,7 @@ function renderChart(group, key) {
   const series = getChartSeries(key);
   document.getElementById(group + "ChartTitle").textContent = `${stats.name} — Trailing Price History`;
   document.getElementById(group + "ChartMeta").textContent =
-    `Last close: ${fmtPrice(stats, key)} on ${stats.lastDate.toISOString().slice(0,10)}` +
-    (stats.limitedHistory ? "  •  Limited history available (source: " + stats.source + ")" : "  •  Source: " + stats.source);
+    `Last close: ${fmtPrice(stats, key)} on ${stats.lastDate.toISOString().slice(0,10)}  •  Source: ${stats.source}`;
 
   const canvas = document.getElementById(group + "ChartCanvas");
   if (chartInstances[group]) chartInstances[group].destroy();
@@ -198,12 +197,13 @@ function setupToggle(toggleId, group, gridId) {
   });
 }
 
-function renderLastUpdated(ts) {
+function renderLastUpdated(lastRowDate) {
   const line = document.getElementById("lastUpdatedLine");
-  if (ts) {
-    line.textContent = "Live data last refreshed " + new Date(ts).toLocaleString() + " (local time)";
+  if (lastRowDate) {
+    line.textContent = "Data as of " + lastRowDate.toISOString().slice(0, 10) +
+      " (updated once daily via GitHub Actions, ~07:00 KST)";
   } else {
-    line.textContent = "Showing built-in snapshot as of " + (RAW.SPX ? new Date(RAW.SPX.t[RAW.SPX.t.length-1]*1000).toISOString().slice(0,10) : "—") + ". Click Refresh Data for live prices.";
+    line.textContent = "Could not determine data date.";
   }
 }
 
@@ -213,25 +213,34 @@ async function handleRefresh() {
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> Refreshing…';
   status.innerHTML = "";
-  const result = await refreshAll();
+  try {
+    const lastRowDate = await loadMarketHistory(true);
+    renderLastUpdated(lastRowDate);
+    renderGrid("equity", "equityGrid");
+    renderGrid("commodity", "commodityGrid");
+    status.textContent = "Reloaded latest data from market_history.xlsx.";
+  } catch (e) {
+    status.innerHTML = `<span class="warn">⚠ Could not reload data: ${e.message}</span>`;
+  }
   btn.disabled = false;
   btn.innerHTML = "⟳ Refresh Data";
-  renderLastUpdated(Date.now());
-  renderGrid("equity", "equityGrid");
-  renderGrid("commodity", "commodityGrid");
-  if (result.failed.length) {
-    status.innerHTML = `<span class="warn">⚠ ${result.failed.length} of ${Object.keys(ASSETS).length} tickers failed to refresh (${result.failed.join(", ")}). Free CORS proxy can be flaky — try again in a moment.</span>`;
-  } else {
-    status.textContent = "All tickers refreshed successfully.";
+}
+
+async function init() {
+  setupToggle("toggleEquity", "equity", "equityGrid");
+  setupToggle("toggleCommodity", "commodity", "commodityGrid");
+  try {
+    const lastRowDate = await loadMarketHistory(false);
+    renderLastUpdated(lastRowDate);
+    renderGrid("equity", "equityGrid");
+    renderGrid("commodity", "commodityGrid");
+  } catch (e) {
+    document.getElementById("statusBar").innerHTML =
+      `<span class="warn">⚠ Could not load ${DATA_FILE}: ${e.message}</span>`;
   }
 }
 
-const cachedAt = initData();
-renderLastUpdated(cachedAt);
-setupToggle("toggleEquity", "equity", "equityGrid");
-setupToggle("toggleCommodity", "commodity", "commodityGrid");
-renderGrid("equity", "equityGrid");
-renderGrid("commodity", "commodityGrid");
+init();
 </script>
 
 </body>
