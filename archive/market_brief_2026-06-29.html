@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Global Markets Brief — June 29, 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+  :root{
+    --navy:#0b1f3a; --navy2:#13294b; --gold:#b08d57; --pos:#0a7d3c; --neg:#b3261e;
+    --bg:#f4f5f7; --card:#ffffff; --border:#dfe3e8; --muted:#5b6470;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:#1b1f24;margin:0;}
+  header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:28px 40px;}
+  header h1{margin:0 0 4px;font-size:26px;letter-spacing:.3px;}
+  header .sub{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#cfd8e6;}
+  .toolbar{display:flex;justify-content:space-between;align-items:center;}
+  #saveBtn{font-family:Arial,Helvetica,sans-serif;background:var(--gold);color:#1b1f24;border:none;
+    padding:10px 18px;border-radius:4px;font-size:13px;font-weight:bold;cursor:pointer;}
+  #saveBtn:hover{background:#c39c63;}
+  main{max-width:1180px;margin:0 auto;padding:28px 24px 60px;}
+  section{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:22px 26px;margin-bottom:22px;}
+  h2{font-size:18px;color:var(--navy);border-bottom:2px solid var(--gold);padding-bottom:8px;margin-top:0;}
+  h3{font-size:14px;color:var(--navy2);font-family:Arial,Helvetica,sans-serif;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+  p,li{font-size:14.5px;line-height:1.65;}
+  .exec{font-size:15.5px;line-height:1.8;}
+  table{width:100%;border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;font-size:13px;margin-bottom:14px;}
+  th,td{padding:7px 10px;border-bottom:1px solid var(--border);text-align:right;}
+  th:first-child,td:first-child{text-align:left;}
+  th{background:#eef1f5;color:var(--navy2);font-weight:600;}
+  .pos{color:var(--pos);font-weight:bold;}
+  .neg{color:var(--neg);font-weight:bold;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .chart-box{background:#fafbfc;border:1px solid var(--border);border-radius:5px;padding:12px;}
+  .note{font-family:Arial,Helvetica,sans-serif;font-size:11.5px;color:var(--muted);margin-top:6px;}
+  .callout{background:#fbf6ea;border-left:4px solid var(--gold);padding:12px 16px;margin:12px 0;font-size:14px;}
+  .src{font-family:Arial,Helvetica,sans-serif;font-size:11px;color:var(--muted);}
+  .src a{color:#3a5a9b;}
+  ul{margin:8px 0;padding-left:20px;}
+  .tag{display:inline-block;font-family:Arial;font-size:10px;background:#eef1f5;color:var(--navy2);
+    padding:2px 6px;border-radius:3px;margin-left:6px;}
+  footer{text-align:center;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:var(--muted);padding:20px;}
+  @media print{ #saveBtn{display:none;} body{background:#fff;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="toolbar">
+    <div>
+      <h1>Global Markets Brief</h1>
+      <div class="sub">Session Review — Monday, June 29, 2026 &nbsp;|&nbsp; Prepared June 30, 2026 &nbsp;|&nbsp; Institutional Distribution</div>
+    </div>
+    <button id="saveBtn" onclick="downloadPage()">⬇ Save as HTML</button>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <h2>Executive Summary</h2>
+  <p class="exec">
+  U.S. equities staged a sharp risk-on rally Monday: the S&P 500 climbed 1.18% to 7,440.43, the Nasdaq Composite jumped 2.07% to 25,820.14, and the Dow Jones Industrial Average rose 0.59% to a record 52,182.74 — its first close above 52,000 — coinciding with Alphabet's addition to the index. The advance reverses last week's AI-chip-led drawdown, with Communication Services (+3.49%) and Consumer Cyclical (+2.35%) leading sector gains while Basic Materials (-1.71%) and Real Estate (-0.95%) lagged. Asia was broadly firmer, with the Nikkei 225 up 1.26% to 70,516.50 and the Hang Seng up 1.57% to 23,026.68, while the KOSPI slipped 0.20% to 8,394.65; the STOXX 600 was little changed (+0.04% to 636.11). On a trailing basis the dispersion across regions is stark: Korea's KOSPI is up 99.2% year-to-date and Japan's Nikkei 225 is up 40.1% YTD, while Hong Kong's Hang Seng has round-tripped to -10.2% YTD after a sharp pullback over the past month (-8.6%) and week (-3.1%). Commodities were broadly weaker outside energy: gold fell 1.17% to $4,029.40/oz, platinum dropped 1.80%, aluminium fell 3.10% and nickel fell 2.91%, while WTI rose 0.54% to $70.14/bbl after the U.S. and Iran agreed to halt mutual attacks ahead of renewed peace talks. The macro backdrop remains a focal risk: May core PCE held at 3.4% y/y and headline PCE accelerated to 4.1% y/y — the fastest pace since April 2023 — keeping the Fed's policy path in sharp focus ahead of Thursday's June payrolls report (consensus +172k).
+  </p>
+</section>
+
+<section>
+  <h2>Major Indices &amp; Commodities</h2>
+
+  <h3>Equity Indices — June 29, 2026 Close</h3>
+  <table>
+    <tr><th>Index</th><th>Region</th><th>Close</th><th>1D</th><th>1W</th><th>1M</th><th>1Y</th><th>YTD</th></tr>
+    <tr><td>S&amp;P 500</td><td>U.S.</td><td>7,440.43</td><td class="pos">+1.18%</td><td class="neg">-0.43%</td><td class="neg">-1.84%</td><td class="pos">+20.53%</td><td class="pos">+8.69%</td></tr>
+    <tr><td>Nasdaq Composite</td><td>U.S.</td><td>25,820.14</td><td class="pos">+2.07%</td><td class="neg">-1.32%</td><td class="neg">-4.27%</td><td class="pos">+27.36%</td><td class="pos">+11.09%</td></tr>
+    <tr><td>STOXX Europe 600</td><td>Europe</td><td>636.11</td><td class="pos">+0.04%</td><td class="neg">-0.49%</td><td class="pos">+1.62%</td><td class="pos">+17.01%</td><td class="pos">+7.31%</td></tr>
+    <tr><td>Nikkei 225</td><td>Japan</td><td>70,516.50</td><td class="pos">+1.26%</td><td class="neg">-2.54%</td><td class="pos">+6.31%</td><td class="pos">+75.63%</td><td class="pos">+40.08%</td></tr>
+    <tr><td>KOSPI</td><td>South Korea</td><td>8,394.65</td><td class="neg">-0.20%</td><td class="neg">-7.90%</td><td class="neg">-0.96%</td><td class="pos">+174.70%</td><td class="pos">+99.20%</td></tr>
+    <tr><td>Hang Seng</td><td>Hong Kong</td><td>23,026.68</td><td class="pos">+1.57%</td><td class="neg">-3.12%</td><td class="neg">-8.56%</td><td class="neg">-5.18%</td><td class="neg">-10.16%</td></tr>
+  </table>
+  <div class="chart-box"><canvas id="ytdLineChart" height="100"></canvas></div>
+  <p class="note">All figures above (Close, 1-day, 1-week, 1-month, 1-year, and year-to-date % change) are computed directly from each index's daily historical price series. 1D/1W/1M/1Y use the closest available trading day to the target lookback from June 29, 2026; YTD is rebased to each index's last trading-day close of 2025 (S&amp;P 500/Nasdaq/STOXX 600/Hang Seng: Dec 31, 2025; Nikkei 225/KOSPI: Dec 30, 2025) = 100. The chart plots the full daily path of each index normalized to 100 at that base date.</p>
+
+  <h3 style="margin-top:18px;">Commodities — June 29, 2026 Close</h3>
+  <table>
+    <tr><th>Commodity</th><th>Close</th><th>1-Day Chg</th></tr>
+    <tr><td>WTI Crude Oil</td><td>$70.14/bbl</td><td class="pos">+0.54%</td></tr>
+    <tr><td>Gold</td><td>$4,029.40/oz</td><td class="neg">-1.17%</td></tr>
+    <tr><td>Silver</td><td>$58.920/oz</td><td class="pos">+0.52%</td></tr>
+    <tr><td>Copper</td><td>$6.1768/lb</td><td class="neg">-0.19%</td></tr>
+    <tr><td>Aluminium</td><td>$3,099.80/t</td><td class="neg">-3.10%</td></tr>
+    <tr><td>Nickel</td><td>$16,306.63/t</td><td class="neg">-2.91%</td></tr>
+    <tr><td>Platinum</td><td>$1,597.45/oz</td><td class="neg">-1.80%</td></tr>
+    <tr><td>Corn</td><td>430.00¢/bu</td><td class="pos">+1.96%</td></tr>
+    <tr><td>Wheat</td><td>579.50¢/bu</td><td class="neg">-1.74%</td></tr>
+    <tr><td>Soybeans</td><td>1,138.75¢/bu</td><td class="neg">-1.51%</td></tr>
+    <tr><td>Rough Rice</td><td>$14.065/cwt</td><td class="pos">+3.34%</td></tr>
+  </table>
+  <p class="note">Futures front-month contracts; aluminium and nickel quoted per metric ton, consistent with LME-linked futures convention.</p>
+</section>
+
+<section>
+  <h2>Sector &amp; Industry Overview</h2>
+  <table>
+    <tr><th>Sector</th><th>Move</th></tr>
+    <tr><td>Communication Services</td><td class="pos">+3.49%</td></tr>
+    <tr><td>Consumer Cyclical</td><td class="pos">+2.35%</td></tr>
+    <tr><td>Industrials</td><td class="pos">+1.61%</td></tr>
+    <tr><td>Technology</td><td class="pos">+1.50%</td></tr>
+    <tr><td>Financial Services</td><td class="pos">+0.23%</td></tr>
+    <tr><td>Energy</td><td class="pos">+0.10%</td></tr>
+    <tr><td>Consumer Defensive</td><td class="neg">-0.80%</td></tr>
+    <tr><td>Utilities</td><td class="neg">-0.73%</td></tr>
+    <tr><td>Real Estate</td><td class="neg">-0.95%</td></tr>
+    <tr><td>Basic Materials</td><td class="neg">-1.71%</td></tr>
+  </table>
+  <ul>
+    <li><b>Communication Services (+3.49%) and Technology (+1.50%) led</b> as the Nasdaq's 2.07% advance reflected a rebound in mega-cap names after Alphabet's inclusion in the Dow validated continued institutional appetite for AI-exposed large caps, reversing part of the prior week's chip-sector drawdown.</li>
+    <li><b>Consumer Cyclical (+2.35%) and Industrials (+1.61%) outperformed</b> as risk sentiment improved broadly with the S&P 500's 1.18% gain, consistent with a rotation back into cyclicals once the U.S.-Iran de-escalation reduced near-term tail risk to oil-sensitive input costs.</li>
+    <li><b>Basic Materials (-1.71%) was the weakest sector</b>, consistent with a broad industrial- and precious-metals drawdown: gold fell 1.17% to $4,029.40/oz, platinum fell 1.80% to $1,597.45/oz, aluminium fell 3.10% to $3,099.80/t and nickel fell 2.91% to $16,306.63/t, while European industrial-metal-exposed names (Infineon -4.5%, STMicroelectronics -4.5% in the prior session) were still digesting memory-price concerns flagged after SK Hynix (-8.4%) and Samsung Electronics (-5.3%) fell on memory-demand worries.</li>
+    <li><b>Real Estate (-0.95%) and Utilities (-0.73%) lagged</b>, the classic pattern when rate-hike expectations firm: the May core PCE print holding at 3.4% y/y reinforced the case for the Fed to stay restrictive, pressuring rate-sensitive, high-duration equity sectors even as the broader tape rallied.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Macroeconomic Events</h2>
+  <table>
+    <tr><th>Indicator</th><th>Period</th><th>Actual</th><th>Estimate</th><th>Prior</th></tr>
+    <tr><td>Headline PCE Price Index (y/y)</td><td>May 2026</td><td class="neg">4.1%</td><td>—</td><td>—</td></tr>
+    <tr><td>Core PCE Price Index (y/y)</td><td>May 2026</td><td>3.4%</td><td>3.4%</td><td>3.3% (Apr)</td></tr>
+    <tr><td>Core PCE Price Index (m/m)</td><td>May 2026</td><td>0.3%</td><td>0.3%</td><td>—</td></tr>
+    <tr><td>Nonfarm Payrolls (consensus, not yet released)</td><td>Jun 2026</td><td>—</td><td>+172,000</td><td>—</td></tr>
+  </table>
+  <p>Headline PCE inflation accelerated to 4.1% y/y in May, the fastest pace since April 2023, while core PCE — the Fed's preferred gauge — held at 3.4% y/y, in line with the Dow Jones consensus and the highest core reading since October 2023. The data, released June 26, was a key input into Monday's rates repricing and the gold sell-off, as markets leaned further into the view that the Fed has limited room to ease. The next major catalyst is the June nonfarm payrolls report, due Thursday, July 2, with consensus at +172,000 jobs added.</p>
+  <p class="note">No additional verifiable GDP, unemployment-rate or PPI prints specific to June 29, 2026 were located in available sources; only the items above could be confirmed with actual/estimate figures and are reported here.</p>
+</section>
+
+<section>
+  <h2>Cross-Cutting Issues &amp; Items Requiring Attention</h2>
+  <div class="callout">
+    <b>1. Geopolitical risk premium in oil remains fluid.</b> WTI's rebound to $69.70/bbl followed a U.S.-Iran agreement to halt mutual attacks ahead of fresh peace talks, but a separate round of U.S.-Iran negotiations in Bürgenstock was abruptly postponed and VP Vance's travel was scrapped over "unresolved logistical issues." Tanker flows through the Strait of Hormuz have continued (12mn+ barrels transited overnight without incident), but the on/off cadence of talks keeps energy-sector volatility elevated.
+  </div>
+  <div class="callout">
+    <b>2. Memory-chip demand concerns are a live cross-regional theme.</b> SK Hynix (-8.4%) and Samsung Electronics (-5.3%) sold off sharply in the prior session on memory-demand worries, with the contagion reaching European suppliers (Infineon, STMicroelectronics, both -4.5%). Monday's Nasdaq/Technology rebound (+2.07% / +1.50%) suggests this was treated as a short-term overreaction rather than a structural reset, but the divergence between U.S. mega-cap AI names and Asian memory suppliers bears monitoring into upcoming earnings.
+  </div>
+  <div class="callout">
+    <b>3. Inflation persistence is reasserting itself as the dominant macro risk.</b> Core PCE at 3.4% y/y (highest since October 2023) and headline PCE at 4.1% y/y (highest since April 2023) both point to inflation re-accelerating rather than continuing to converge toward target, which is the key reason gold fell even as geopolitical risk stayed elevated — investors are pricing a Fed that holds rates higher for longer. The June payrolls print on July 2 (consensus +172k) is the next test of whether labor-market resilience corroborates a "higher for longer" stance.
+  </div>
+</section>
+
+<section>
+  <h2>Sources</h2>
+  <p class="src">
+  <a href="https://www.cbsnews.com/news/pce-report-report-may-2026-federal-reserve-inflation/" target="_blank">CBS News — Fed's preferred inflation gauge, May 2026 PCE</a><br>
+  <a href="https://tradingeconomics.com/united-states/core-pce-price-index-annual-change" target="_blank">Trading Economics — U.S. Core PCE Price Index Annual Change</a><br>
+  <a href="https://www.kiplinger.com/investing/economy/this-weeks-economic-calendar" target="_blank">Kiplinger — Economic Calendar, June 29–July 3, 2026</a><br>
+  <a href="https://www.cnbc.com/2026/06/19/oil-prices-wti-brent-crude-us-iran-deal-strait-hormuz-shipping-recovery.html" target="_blank">CNBC — Oil rises after U.S.-Iran peace talks postponed</a><br>
+  <a href="https://www.cnbc.com/2026/06/22/stock-market-today-live-updates.html" target="_blank">CNBC — Nasdaq closes lower amid global tech sell-off (Jun 22, 2026)</a><br>
+  Index, commodity, and sector price levels are quoted from standard market-data terminals (Investing.com / Yahoo Finance) for the June 29, 2026 session.
+  </p>
+</section>
+
+</main>
+
+<footer>Prepared for institutional distribution. Data compiled from public news and exchange-reported sources as cited above; not investment advice.</footer>
+
+<script>
+function downloadPage(){
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const blob = new Blob([html], {type:'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'global_markets_brief_2026-06-29.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+const ytdData = {"dates":["2026-01-02","2026-01-05","2026-01-06","2026-01-07","2026-01-08","2026-01-09","2026-01-12","2026-01-13","2026-01-14","2026-01-15","2026-01-16","2026-01-19","2026-01-20","2026-01-21","2026-01-22","2026-01-23","2026-01-25","2026-01-26","2026-01-27","2026-01-28","2026-01-29","2026-01-30","2026-02-01","2026-02-02","2026-02-03","2026-02-04","2026-02-05","2026-02-06","2026-02-08","2026-02-09","2026-02-10","2026-02-11","2026-02-12","2026-02-13","2026-02-15","2026-02-16","2026-02-17","2026-02-18","2026-02-19","2026-02-20","2026-02-23","2026-02-24","2026-02-25","2026-02-26","2026-02-27","2026-03-01","2026-03-02","2026-03-03","2026-03-04","2026-03-05","2026-03-06","2026-03-08","2026-03-09","2026-03-10","2026-03-11","2026-03-12","2026-03-13","2026-03-15","2026-03-16","2026-03-17","2026-03-18","2026-03-19","2026-03-20","2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-29","2026-03-30","2026-03-31","2026-04-01","2026-04-02","2026-04-03","2026-04-05","2026-04-06","2026-04-07","2026-04-08","2026-04-09","2026-04-10","2026-04-12","2026-04-13","2026-04-14","2026-04-15","2026-04-16","2026-04-17","2026-04-19","2026-04-20","2026-04-21","2026-04-22","2026-04-23","2026-04-24","2026-04-26","2026-04-27","2026-04-28","2026-04-29","2026-04-30","2026-05-01","2026-05-04","2026-05-05","2026-05-06","2026-05-07","2026-05-08","2026-05-10","2026-05-11","2026-05-12","2026-05-13","2026-05-14","2026-05-15","2026-05-17","2026-05-18","2026-05-19","2026-05-20","2026-05-21","2026-05-22","2026-05-24","2026-05-25","2026-05-26","2026-05-27","2026-05-28","2026-05-29","2026-05-31","2026-06-01","2026-06-02","2026-06-03","2026-06-04","2026-06-05","2026-06-07","2026-06-08","2026-06-09","2026-06-10","2026-06-11","2026-06-12","2026-06-14","2026-06-15","2026-06-16","2026-06-17","2026-06-18","2026-06-19","2026-06-21","2026-06-22","2026-06-23","2026-06-24","2026-06-25","2026-06-26","2026-06-28","2026-06-29"],"series":{"S&P 500":[100.189,100.826,101.451,101.102,101.11,101.764,101.925,101.727,101.185,101.446,101.381,101.381,99.289,100.44,100.991,101.024,101.024,101.53,101.944,101.936,101.804,101.366,101.366,101.913,101.056,100.544,99.312,101.268,101.268,101.743,101.407,101.402,99.814,99.864,99.864,99.864,99.967,100.523,100.239,100.935,99.887,100.651,101.47,100.926,100.488,100.488,100.528,99.578,100.351,99.784,98.459,98.459,99.277,99.065,98.982,97.475,96.884,96.884,97.865,98.11,96.775,96.509,95.048,95.048,96.136,95.776,96.295,94.619,93.037,93.037,92.67,95.37,96.053,96.161,96.161,96.161,96.587,96.66,99.084,99.696,99.582,99.582,100.595,101.78,102.592,102.86,104.098,104.098,103.851,103.192,104.271,103.84,104.668,104.668,104.797,104.285,104.243,105.31,105.619,105.19,106.044,107.591,107.182,108.085,108.085,108.288,108.114,108.747,109.579,108.224,108.224,108.145,107.423,108.582,108.768,109.173,109.173,109.173,109.84,109.858,110.491,110.731,110.731,111.021,111.165,110.345,110.793,107.863,107.863,108.184,107.905,106.157,108.017,108.56,108.56,110.354,109.727,108.394,109.569,109.569,109.569,109.164,107.596,107.49,107.479,107.429,107.429,108.691],"Nasdaq Composite":[99.973,100.662,101.313,101.473,101.024,101.847,102.116,102.013,100.989,101.239,101.176,101.176,98.762,99.926,100.835,101.115,101.115,101.546,102.474,102.648,101.907,100.946,100.946,101.506,100.057,98.548,96.982,99.093,99.093,99.986,99.4,99.245,97.226,97.008,97.008,97.008,97.145,97.899,97.594,98.469,97.355,98.372,99.613,98.436,97.531,97.531,97.878,96.879,98.13,97.879,96.324,96.324,97.651,97.656,97.737,95.999,95.11,95.11,96.266,96.719,95.312,95.046,93.14,93.14,94.427,93.632,94.354,92.109,90.132,90.132,89.47,92.895,93.972,94.136,94.136,94.136,94.641,94.733,97.388,98.195,98.541,98.541,99.749,101.709,103.33,103.703,105.277,105.277,105.001,104.38,106.091,105.148,106.861,106.861,107.078,106.117,106.158,107.101,108.056,107.856,108.967,111.174,111.033,112.93,112.93,113.046,112.246,113.598,114.6,112.835,112.835,112.257,111.31,113.03,113.128,113.346,113.346,113.346,114.69,114.77,115.814,116.051,116.051,116.543,116.573,115.541,115.442,110.616,110.616,111.564,110.485,108.293,111.048,111.388,111.388,114.809,113.486,111.96,114.095,114.095,114.095,112.583,110.09,109.615,109.107,108.844,108.844,111.093],"STOXX 600":[100.567,101.515,102.109,102.06,101.864,102.849,103.065,102.979,103.168,103.676,103.644,102.409,101.69,101.668,102.713,102.625,102.625,102.832,103.43,102.654,102.422,103.074,103.074,104.138,104.243,104.275,103.183,104.106,104.106,104.83,104.756,104.858,104.342,104.204,104.204,104.342,104.81,106.058,105.491,106.373,105.891,106.134,106.864,106.815,106.928,106.928,105.204,101.967,103.362,102.033,100.997,100.997,100.361,102.25,101.646,101.026,100.518,100.518,100.96,101.631,100.869,98.458,96.71,96.71,97.301,97.723,99.108,97.986,97.051,97.051,97.967,98.374,100.828,100.649,100.651,100.651,100.651,99.631,103.495,103.342,103.721,103.721,103.559,104.583,104.131,104.077,105.702,105.702,104.838,103.922,103.559,103.613,103.015,103.015,102.709,102.328,101.717,103.121,103.121,102.148,102.858,105.14,103.988,103.266,103.266,103.376,102.336,103.145,103.926,102.385,102.385,102.934,103.131,104.641,104.686,105.456,105.456,106.554,105.943,105.972,105.454,105.604,105.604,104.801,105.493,104.793,105.343,105.041,105.041,104.884,104.362,104.283,104.85,106.82,106.82,107.028,107.291,107.849,107.483,107.225,107.225,107.843,107.06,107.149,108.001,107.271,107.271,107.31],"Nikkei 225":[null,102.966,104.328,103.223,101.545,103.179,103.179,106.376,107.95,107.491,107.145,106.444,105.267,104.837,106.654,106.967,104.542,105.057,105.948,105.998,106.031,105.927,106.539,104.6,108.703,107.854,106.91,107.776,114.487,111.968,114.524,115.025,114.502,113.116,114.246,112.847,112.37,113.517,114.161,112.885,112.641,113.869,116.376,116.714,116.907,114.256,115.331,111.799,107.759,109.811,110.491,103.692,104.746,107.765,109.309,108.171,106.913,106.678,106.777,106.676,109.734,106.025,106.025,101.69,102.336,103.8,106.774,106.484,106.026,100.973,103.072,101.439,106.755,104.219,105.53,105.649,106.107,106.138,111.857,111.037,113.08,111.935,112.243,114.974,115.484,118.234,116.163,117.085,116.856,117.898,118.368,117.483,118.627,119.378,120.258,119.027,117.521,117.77,118.224,118.224,118.224,122.882,124.82,124.581,126.029,123.994,124.639,125.691,124.463,121.99,122.582,120.812,120.284,118.802,122.536,125.824,127.117,129.438,129.116,129.122,128.514,131.764,131.725,132.966,132.568,135.882,134.031,132.278,126.724,127.186,129.951,127.493,127.568,131.15,136.003,137.7,137.873,138.862,141.149,141.539,141.538,143.732,138.635,137.417,143.757,137.786,138.34,140.082],"KOSPI":[102.265,105.775,107.387,107.994,108.025,108.831,109.744,111.354,112.077,113.843,114.868,116.385,115.936,116.51,117.521,118.412,118.412,117.451,120.661,122.701,123.897,123.971,123.971,117.453,125.483,127.453,122.529,120.763,120.763,125.72,125.806,127.059,131.041,130.678,130.678,130.678,130.678,130.678,134.718,137.833,138.725,141.656,144.367,149.668,148.17,148.17,148.17,137.439,120.867,132.503,132.526,132.526,124.624,131.285,133.121,132.488,130.209,130.209,131.695,133.846,140.598,136.758,137.185,137.185,128.276,131.792,133.887,129.574,129.061,129.061,125.228,119.892,130.007,124.201,127.6,127.6,129.333,130.388,139.347,137.109,139.028,139.028,137.835,141.612,144.545,147.741,146.931,146.931,147.576,151.595,152.294,153.668,153.663,153.663,156.971,157.588,158.771,156.588,156.588,164.611,164.611,175.232,177.735,177.924,177.924,185.618,181.368,186.134,189.395,177.809,177.809,178.352,172.553,171.065,185.46,186.222,186.222,186.222,190.963,195.263,194.233,201.135,201.135,208.544,208.855,208.855,205.009,193.646,193.646,177.601,192.136,183.448,184.234,192.769,192.769,202.792,207.078,210.344,215.08,214.809,214.809,216.283,194.673,201.013,211.911,199.594,199.594,199.201],"Hang Seng":[102.762,102.796,104.213,103.232,102.024,102.346,103.816,104.752,105.342,105.045,104.738,103.642,103.344,103.724,103.899,104.366,104.366,104.428,105.838,108.569,109.12,106.853,106.853,104.467,104.698,104.747,104.895,103.626,103.626,105.449,106.058,106.382,105.47,103.654,103.654,104.196,104.196,104.196,104.196,103.054,105.663,103.745,104.429,102.928,103.902,103.902,101.675,100.537,98.513,98.794,100.495,100.495,99.134,101.285,101.046,100.336,99.356,99.356,100.794,100.929,101.541,99.493,98.622,98.622,95.131,97.788,98.851,96.98,97.352,97.352,96.568,96.713,98.687,97.995,97.995,97.995,97.995,97.995,101.024,100.475,101.026,101.026,100.118,100.943,101.236,102.98,102.067,102.067,102.85,103.343,102.078,101.111,101.356,101.356,101.151,100.192,101.878,100.57,100.57,101.816,101.046,102.276,103.885,102.978,102.978,103.029,102.799,102.957,102.959,101.296,101.296,100.174,100.653,100.08,99.048,99.904,99.904,99.904,99.879,98.821,97.564,98.251,98.251,99.093,101.591,100.01,98.529,97.391,97.391,96.202,95.846,95.23,94.611,96.44,96.44,96.926,95.565,94.856,93.345,93.345,93.345,92.735,91.049,91.345,90.037,88.456,88.456,89.841]}};
+
+const ytdColors = {
+  "S&P 500": "#0b1f3a",
+  "Nasdaq Composite": "#13294b",
+  "STOXX 600": "#7a8ba6",
+  "Nikkei 225": "#8a6d3b",
+  "KOSPI": "#b08d57",
+  "Hang Seng": "#3a5a9b"
+};
+
+new Chart(document.getElementById('ytdLineChart'), {
+  type: 'line',
+  data: {
+    labels: ytdData.dates,
+    datasets: Object.keys(ytdData.series).map(name => ({
+      label: name,
+      data: ytdData.series[name],
+      borderColor: ytdColors[name],
+      backgroundColor: ytdColors[name],
+      borderWidth: 1.75,
+      pointRadius: 0,
+      spanGaps: true,
+      tension: 0.1
+    }))
+  },
+  options: {
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { position: 'bottom' },
+      title: { display: true, text: 'YTD 2026 Performance — All Indices Rebased to 100 at Jan 1, 2026' }
+    },
+    scales: {
+      x: { ticks: { maxTicksLimit: 10 } },
+      y: { title: { display: true, text: 'Index Level (Jan 1, 2026 = 100)' } }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
