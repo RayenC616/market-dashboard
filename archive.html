@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Market Brief Archive</title>
+<title>마켓 브리프 아카이브</title>
 <style>
   :root{
     --navy:#0b1f3a; --navy2:#13294b; --gold:#b08d57; --bg:#f4f5f7; --card:#ffffff; --border:#dfe3e8; --muted:#5b6470;
   }
   *{box-sizing:border-box;}
-  body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:#1b1f24;margin:0;}
+  body{font-family:'Malgun Gothic','Apple SD Gothic Neo',Arial,Helvetica,sans-serif;background:var(--bg);color:#1b1f24;margin:0;}
   header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:28px 40px;}
   header h1{margin:0 0 4px;font-size:26px;letter-spacing:.3px;font-family:Georgia,'Times New Roman',serif;}
   header .sub{font-size:13px;color:#cfd8e6;}
   .toolbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-  .btn{border:none;padding:10px 16px;border-radius:4px;font-size:12.5px;font-weight:bold;cursor:pointer;}
+  .btn{font-family:inherit;border:none;padding:10px 16px;border-radius:4px;font-size:12.5px;font-weight:bold;cursor:pointer;}
   .btn-outline{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5);}
   .btn-outline:hover{background:rgba(255,255,255,.12);}
   main{max-width:900px;margin:0 auto;padding:28px 24px 60px;}
@@ -34,36 +34,36 @@
 <header>
   <div class="toolbar">
     <div>
-      <h1>Market Brief Archive</h1>
-      <div class="sub">All previously published daily briefs</div>
+      <h1>마켓 브리프 아카이브</h1>
+      <div class="sub">지금까지 발행된 모든 일간 브리프</div>
     </div>
     <div>
-      <button class="btn btn-outline" onclick="location.href='index.html'">← Dashboard</button>
-      <button class="btn btn-outline" onclick="location.href='brief.html'">Latest Brief</button>
+      <button class="btn btn-outline" onclick="location.href='index.html'">← 대시보드</button>
+      <button class="btn btn-outline" onclick="location.href='brief.html'">최신 브리프</button>
     </div>
   </div>
 </header>
 
 <main>
 <section>
-  <h2>Archived Briefs</h2>
+  <h2>보관된 브리프</h2>
   <a class="entry" href="archive/market_brief_2026-07-07.html">
     <div>
-      <div class="date">Tuesday, July 7, 2026</div>
-      <div class="headline">Semiconductor sell-off drags Nasdaq &amp; KOSPI; oil jumps on Strait of Hormuz incident</div>
+      <div class="date">2026년 7월 7일 화요일</div>
+      <div class="headline">반도체 매도세에 나스닥·코스피 급락, 호르무즈 해협 사건으로 유가 급등</div>
     </div>
     <span class="arrow">→</span>
   </a>
   <a class="entry" href="archive/market_brief_2026-06-29.html">
     <div>
-      <div class="date">Monday, June 29, 2026</div>
-      <div class="headline">Risk-on rally lifts S&amp;P 500 and Dow to a record close; gold and industrial metals slip</div>
+      <div class="date">2026년 6월 29일 월요일</div>
+      <div class="headline">위험자산 선호 랠리에 S&amp;P500·다우 사상 최고치 마감, 금과 산업금속은 약세</div>
     </div>
     <span class="arrow">→</span>
   </a>
 </main>
 
-<footer>New briefs are added here each time a daily market brief is published.</footer>
+<footer>일간 마켓 브리프가 새로 발행될 때마다 이곳에 자동으로 추가됩니다.</footer>
 
 </body>
 </html>

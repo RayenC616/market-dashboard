@@ -1,20 +1,20 @@
 /* Ticker metadata + stats + Excel-backed data loading shared by dashboard.html. */
 
 const ASSETS = {
-  SPX:    { name: "S&P 500",        group: "equity",    currency: "USD", decimals: 2, unit: "" },
-  NDX:    { name: "Nasdaq Composite", group: "equity",  currency: "USD", decimals: 2, unit: "" },
-  STOXX:  { name: "STOXX Europe 600", group: "equity",  currency: "EUR", decimals: 2, unit: "" },
-  NKY:    { name: "Nikkei 225",      group: "equity",    currency: "JPY", decimals: 2, unit: "" },
-  HSI:    { name: "Hang Seng",       group: "equity",    currency: "HKD", decimals: 2, unit: "" },
-  KOSPI:  { name: "KOSPI",          group: "equity",    currency: "KRW", decimals: 2, unit: "" },
-  WTI:    { name: "WTI Crude Oil",   group: "commodity", currency: "USD", decimals: 2, unit: "$/bbl" },
-  GOLD:   { name: "Gold",           group: "commodity", currency: "USD", decimals: 2, unit: "$/oz" },
-  SILVER: { name: "Silver",         group: "commodity", currency: "USD", decimals: 3, unit: "$/oz" },
-  COPPER: { name: "Copper",         group: "commodity", currency: "USD", decimals: 4, unit: "$/lb" },
-  NICKEL: { name: "Nickel",         group: "commodity", currency: "USD", decimals: 2, unit: "$/t", source: "investing.com" },
-  CORN:   { name: "Corn",           group: "commodity", currency: "USD", decimals: 2, unit: "¢/bu" },
-  WHEAT:  { name: "Wheat",          group: "commodity", currency: "USD", decimals: 2, unit: "¢/bu" },
-  SOY:    { name: "Soybean",        group: "commodity", currency: "USD", decimals: 2, unit: "¢/bu" },
+  SPX:    { name: "S&P500 지수",     group: "equity",    currency: "USD", decimals: 2, unit: "", source: "Yahoo Finance" },
+  NDX:    { name: "나스닥종합지수",   group: "equity",    currency: "USD", decimals: 2, unit: "", source: "Yahoo Finance" },
+  STOXX:  { name: "STOXX 유럽600",   group: "equity",    currency: "EUR", decimals: 2, unit: "", source: "Yahoo Finance" },
+  NKY:    { name: "니케이225",       group: "equity",    currency: "JPY", decimals: 2, unit: "", source: "Yahoo Finance" },
+  HSI:    { name: "항셍지수",        group: "equity",    currency: "HKD", decimals: 2, unit: "", source: "Yahoo Finance" },
+  KOSPI:  { name: "코스피",         group: "equity",    currency: "KRW", decimals: 2, unit: "", source: "Yahoo Finance" },
+  WTI:    { name: "WTI원유",        group: "commodity", currency: "USD", decimals: 2, unit: "$/bbl", source: "investing.com" },
+  GOLD:   { name: "금",            group: "commodity", currency: "USD", decimals: 2, unit: "$/oz", source: "investing.com" },
+  SILVER: { name: "은",            group: "commodity", currency: "USD", decimals: 3, unit: "$/oz", source: "investing.com" },
+  COPPER: { name: "구리",           group: "commodity", currency: "USD", decimals: 4, unit: "$/lb", source: "investing.com" },
+  NICKEL: { name: "니켈",           group: "commodity", currency: "USD", decimals: 2, unit: "$/t", source: "investing.com" },
+  CORN:   { name: "옥수수",         group: "commodity", currency: "USD", decimals: 2, unit: "¢/bu", source: "investing.com" },
+  WHEAT:  { name: "밀",            group: "commodity", currency: "USD", decimals: 2, unit: "¢/bu", source: "investing.com" },
+  SOY:    { name: "대두",           group: "commodity", currency: "USD", decimals: 2, unit: "¢/bu", source: "investing.com" },
 };
 
 const DATA_FILE = "data/market_history.xlsx";
@@ -119,11 +119,15 @@ function getStats(key) {
   };
 }
 
-function getChartSeries(key) {
+const CHART_RANGES = {
+  "1W": 8, "1M": 32, "3M": 93, "1Y": 366, "3Y": 1097,
+};
+
+function getChartSeries(key, rangeKey) {
   const d = RAW[key];
   if (!d || !d.t.length) return { labels: [], values: [] };
-  const oneYearMs = 366 * 86400000;
-  const cutoff = d.t[d.t.length - 1] * 1000 - oneYearMs;
+  const days = CHART_RANGES[rangeKey] || CHART_RANGES["1Y"];
+  const cutoff = d.t[d.t.length - 1] * 1000 - days * 86400000;
   let startIdx = d.t.findIndex(ts => ts * 1000 >= cutoff);
   if (startIdx < 0) startIdx = 0;
   const t = d.t.slice(startIdx);

@@ -2,6 +2,11 @@
 
 Fetches the latest close for all 14 tracked assets and appends one new row
 to data/market_history.xlsx, unless today's row is already present.
+
+Equity indices come from Yahoo Finance. Commodities come from investing.com
+to match the historical CSVs the dataset was seeded from (Yahoo's commodity
+futures occasionally diverge from investing.com's series/contract-roll
+convention, which would otherwise create a visible seam in the chart).
 """
 import re
 from datetime import datetime, timezone
@@ -19,14 +24,18 @@ YAHOO_SYMBOLS = {
     "NKY": "^N225",
     "HSI": "^HSI",
     "KOSPI": "^KS11",
-    "WTI": "CL=F",
-    "GOLD": "GC=F",
-    "SILVER": "SI=F",
-    "COPPER": "HG=F",
-    "CORN": "ZC=F",
-    "WHEAT": "ZW=F",
-    "SOY": "ZS=F",
 }
+INVESTING_SLUGS = {
+    "WTI": "crude-oil",
+    "GOLD": "gold",
+    "SILVER": "silver",
+    "COPPER": "copper",
+    "NICKEL": "nickel",
+    "CORN": "us-corn",
+    "WHEAT": "us-wheat",
+    "SOY": "us-soybeans",
+}
+COPPER_TONNE_TO_LB = 2204.62
 COLUMNS = ["SPX", "NDX", "STOXX", "NKY", "HSI", "KOSPI", "WTI", "GOLD", "SILVER",
            "COPPER", "NICKEL", "CORN", "WHEAT", "SOY"]
 
@@ -49,8 +58,8 @@ def fetch_yahoo_last_close(symbol):
     return None, None
 
 
-def fetch_nickel_price():
-    resp = requests.get("https://www.investing.com/commodities/nickel",
+def fetch_investing_price(slug):
+    resp = requests.get(f"https://www.investing.com/commodities/{slug}",
                          headers={"User-Agent": UA}, timeout=20)
     resp.raise_for_status()
     match = re.search(r'"last":([0-9.]+),"changePcr":(-?[0-9.]+)', resp.text)
@@ -75,13 +84,13 @@ def main():
         try:
             date, close = fetch_yahoo_last_close(symbol)
             if date is not None:
-                values[key] = (date, close)
+                values[key] = close
                 latest_dates.append(date)
         except Exception as e:
             print(f"WARN: failed to fetch {key} ({symbol}): {e}")
 
     if not latest_dates:
-        print("No data fetched for any ticker, aborting without changes.")
+        print("No equity data fetched, aborting without changes.")
         return
 
     target_date = max(latest_dates)
@@ -91,22 +100,20 @@ def main():
         print(f"Row for {target_date_str} already present, nothing to do.")
         return
 
-    try:
-        nickel_price = fetch_nickel_price()
-    except Exception as e:
-        print(f"WARN: failed to fetch NICKEL: {e}")
-        nickel_price = None
+    for key, slug in INVESTING_SLUGS.items():
+        try:
+            price = fetch_investing_price(slug)
+            if key == "COPPER" and price is not None:
+                price = price / COPPER_TONNE_TO_LB
+            values[key] = price
+        except Exception as e:
+            print(f"WARN: failed to fetch {key} (investing.com/{slug}): {e}")
 
     new_row = [None] * len(header)
     new_row[date_col - 1] = target_date
     for key in COLUMNS:
         col_idx = header.index(key) + 1
-        if key == "NICKEL":
-            value = nickel_price
-        else:
-            entry = values.get(key)
-            value = entry[1] if entry and entry[0] == target_date else None
-        new_row[col_idx - 1] = value
+        new_row[col_idx - 1] = values.get(key)
 
     sheet.append(new_row)
     new_row_idx = sheet.max_row

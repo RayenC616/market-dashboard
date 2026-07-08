@@ -1,29 +1,35 @@
-# Global Markets Dashboard
+# Global Markets Dashboard (글로벌 마켓 대시보드)
 
-Static market dashboard and daily brief generator. No app backend — plain HTML/CSS/JS, safe to host on GitHub Pages. The only server-side piece is a scheduled GitHub Actions job that keeps the price data current.
+Static market dashboard and weekly brief generator, in Korean. No app backend — plain HTML/CSS/JS, safe to host on GitHub Pages. Two scheduled GitHub Actions jobs keep it current: one fetches prices daily, the other writes a new brief every Monday using Claude.
 
-- `index.html` — Equity & commodity heat map with a Day/Week toggle (site homepage). Click any tile for its 1-year price chart. Reads all prices from `data/market_history.xlsx`.
-- `brief.html` — Latest daily market brief: executive summary, market drivers, S&P 500 best/worst performers, sources, and Save as HTML / Save as PDF buttons.
+- `index.html` — Equity & commodity heat map with a Day/Week toggle (site homepage). Click any tile for its price chart with a Week/1M/3M/1Y/3Y range selector. Reads all prices from `data/market_history.xlsx`.
+- `brief.html` — Latest weekly market brief: executive summary, market drivers, S&P 500 best/worst weekly performers, sources, and Save as HTML / Save as PDF buttons.
 - `archive.html` — Links to every previously published brief (stored under `archive/`).
-- `data/market_history.xlsx` — Single source of truth for all 14 tracked assets' daily closes. One row per date, one column per asset.
-- `scripts/update_market_data.py` — Fetches the latest close for all 14 assets and appends a row to the Excel file if today's date isn't already present.
-- `.github/workflows/update-market-data.yml` — Runs the script once a day (22:00 UTC / 07:00 KST) and auto-commits the updated Excel file.
+- `data/market_history.xlsx` — Single source of truth for all 14 tracked assets' daily closes (S&P 500 back to 1998, most commodities to 2010). One row per date, one column per asset.
+- `scripts/update_market_data.py` — Runs daily: fetches the latest close for all 14 assets and appends a row if today's date isn't already present. Equity indices come from Yahoo Finance; all 8 commodities come from investing.com (matching the historical CSVs the dataset was seeded from — Yahoo's futures occasionally use a different contract-roll convention, which would otherwise create a visible seam).
+- `scripts/generate_weekly_brief.py` + `scripts/brief_template.html` — Runs weekly: computes the past week's stats and S&P 500 movers from the Excel file, asks Claude (with web search) to research the week's real news and write the narrative in Korean, renders it into `brief.html`, and archives the previous one.
+- `.github/workflows/update-market-data.yml` — Daily cron (22:00 UTC / 07:00 KST).
+- `.github/workflows/weekly-brief.yml` — Weekly cron, Monday 07:00 KST (22:00 UTC Sunday).
 - `js/market.js` — Ticker metadata, stats/chart logic, and the in-browser Excel parser (via SheetJS).
 
 ## How the data flow works
 
-1. Once a day, GitHub Actions runs `scripts/update_market_data.py`, which hits Yahoo Finance directly (13 tickers) and investing.com (Nickel) exactly once, then commits the new row to `data/market_history.xlsx`.
-2. Every visitor's browser just reads that same committed file — no per-visitor API calls, no CORS proxy, no rate limits.
-3. The dashboard's "Refresh Data" button re-fetches `market_history.xlsx` (cache-busted) to pick up whatever the Action last committed — it does not call Yahoo/investing.com itself.
+1. Daily, GitHub Actions runs `update_market_data.py`, which fetches each asset's close exactly once and commits the new row to `data/market_history.xlsx`.
+2. Every visitor's browser just reads that same committed file — no per-visitor API calls, no CORS proxy, no rate limits. The dashboard's "Refresh Data" button re-fetches the Excel file (cache-busted) rather than calling Yahoo/investing.com itself.
+3. Weekly (Monday mornings), `generate_weekly_brief.py` reads the same Excel file, asks Claude to research and write that week's brief, and archives the outgoing one automatically.
 
-### One-time setup for the Action to work
+## One-time setup
 
-In the GitHub repo: **Settings → Actions → General → Workflow permissions** → select "Read and write permissions" → Save. Without this, the Action can fetch data but can't push the commit back.
+**For the daily price updater:** Settings → Actions → General → Workflow permissions → select "Read and write permissions" → Save. Without this, the Action can fetch data but can't push the commit back.
 
-You can trigger the first run immediately instead of waiting for the schedule: **Actions tab → Update Market Data → Run workflow**.
+**For the weekly brief:** the same workflow-permissions step above, plus an API key:
+1. Create a key at [console.anthropic.com](https://console.anthropic.com) (requires a funded Anthropic Console account — this calls the API per-brief, at real cost).
+2. In the repo: Settings → Secrets and variables → Actions → New repository secret → name it `ANTHROPIC_API_KEY`, paste the key.
+3. Before relying on this in production, confirm `web_search_20250305` is still the current web-search tool identifier in [Anthropic's tool-use docs](https://docs.anthropic.com) — this was written against the API as documented at the time and the identifier may have since changed.
 
-## Publishing a new brief
+You can trigger either workflow immediately instead of waiting for its schedule: **Actions tab → (workflow name) → Run workflow**.
 
-1. Regenerate `brief.html` with the new session's data.
-2. Copy the previous `brief.html` into `archive/market_brief_<session-date>.html`.
-3. Add an entry for it at the top of `archive.html`.
+## Notes on the weekly brief
+
+- The narrative (executive summary, drivers, stock commentary, sources) is genuinely researched and written by Claude each run — it is not templated filler. The price tables and best/worst-performer rankings are computed directly from data, not from the model.
+- The very first run archives the hand-written `brief.html` currently in the repo; after that, every run's brief embeds a `<!-- BRIEF_META -->` comment so the next run can correctly label it in the archive.
