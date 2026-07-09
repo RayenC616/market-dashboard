@@ -28,7 +28,7 @@
   .btn-outline{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5);}
   .btn-outline:hover{background:rgba(255,255,255,.12);}
   main{max-width:900px;margin:0 auto;padding:28px 24px 60px;}
-  section{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:22px 26px;}
+  section{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:22px 26px;margin-bottom:22px;}
   h2{font-size:18px;color:var(--navy);border-bottom:2px solid var(--gold);padding-bottom:8px;margin-top:0;}
   .entry{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);
     border-radius:6px;padding:16px 18px;margin-bottom:12px;text-decoration:none;color:inherit;transition:box-shadow .15s;}
@@ -36,6 +36,8 @@
   .entry .date{font-weight:bold;font-size:15px;color:var(--navy2);}
   .entry .headline{font-size:13px;color:var(--muted);margin-top:3px;}
   .entry .arrow{color:var(--gold);font-size:18px;}
+  .empty-note{font-size:13px;color:var(--muted);padding:8px 0;}
+  .admin-tag{font-size:11px;color:var(--muted);font-weight:normal;text-transform:none;letter-spacing:0;margin-left:8px;}
   footer{text-align:center;font-size:11px;color:var(--muted);padding:20px;}
   .user-badge{display:flex;align-items:center;gap:10px;color:#fff;font-size:12.5px;margin-right:8px;}
   .user-badge .name{font-weight:bold;background:rgba(255,255,255,.15);padding:5px 12px;border-radius:20px;}
@@ -48,7 +50,7 @@
   <div class="toolbar">
     <div>
       <h1>마켓 브리프 아카이브</h1>
-      <div class="sub">지금까지 발행된 모든 일간 브리프</div>
+      <div class="sub">지금까지 발행된 모든 일간·주간 브리프</div>
     </div>
     <div style="display:flex;align-items:center;">
       <div class="user-badge" id="userBadge"></div>
@@ -59,30 +61,45 @@
 </header>
 
 <main>
-<section>
-  <h2>보관된 브리프</h2>
-  <a class="entry" href="archive/market_brief_2026-07-07.html">
-    <div>
-      <div class="date">2026년 7월 7일 화요일</div>
-      <div class="headline">반도체 매도세에 나스닥·코스피 급락, 호르무즈 해협 사건으로 유가 급등</div>
-    </div>
-    <span class="arrow">→</span>
-  </a>
-  <a class="entry" href="archive/market_brief_2026-06-29.html">
-    <div>
-      <div class="date">2026년 6월 29일 월요일</div>
-      <div class="headline">위험자산 선호 랠리에 S&amp;P500·다우 사상 최고치 마감, 금과 산업금속은 약세</div>
-    </div>
-    <span class="arrow">→</span>
-  </a>
+
+<section id="dailySection">
+  <h2>일간 브리프<span class="admin-tag">(관리자 전용)</span></h2>
+  <div id="dailyEntries">
+    <a class="entry" data-category="daily" href="archive/market_brief_2026-07-07.html">
+      <div>
+        <div class="date">2026년 7월 7일 화요일</div>
+        <div class="headline">반도체 매도세에 나스닥·코스피 급락, 호르무즈 해협 사건으로 유가 급등</div>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+    <a class="entry" data-category="daily" href="archive/market_brief_2026-06-29.html">
+      <div>
+        <div class="date">2026년 6월 29일 월요일</div>
+        <div class="headline">위험자산 선호 랠리에 S&amp;P500·다우 사상 최고치 마감, 금과 산업금속은 약세</div>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<section id="weeklySection">
+  <h2>주간 브리프</h2>
+  <div id="weeklyEntries">
+    <p class="empty-note">아직 발행된 주간 브리프가 없습니다. 매주 월요일 07:00 KST에 자동으로 추가됩니다.</p>
+  </div>
+</section>
+
 </main>
 
-<footer>일간 마켓 브리프가 새로 발행될 때마다 이곳에 자동으로 추가됩니다.</footer>
+<footer>일간 브리프는 관리자가 필요할 때 생성하고, 주간 브리프는 매주 월요일 자동으로 발행됩니다.</footer>
 
 <script>
 if (_authUser) {
   document.getElementById("userBadge").innerHTML =
     `<span class="name">${_authUser.username}</span><button class="logout-link" onclick="logout()">로그아웃</button>`;
+  if (_authUser.role !== "admin") {
+    document.getElementById("dailySection").style.display = "none";
+  }
 }
 </script>
 

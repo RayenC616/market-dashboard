@@ -1,0 +1,36 @@
+name: Daily Market Brief
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install anthropic requests openpyxl
+
+      - name: Generate daily brief
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/generate_daily_brief.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "market-brief-bot"
+          git config user.email "actions@github.com"
+          git add brief.html archive.html archive/
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Daily market brief: $(date -u +%Y-%m-%d)"
+            git push
+          fi

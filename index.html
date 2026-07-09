@@ -99,6 +99,7 @@
     </div>
     <div style="display:flex;align-items:center;gap:16px;">
       <div class="user-badge" id="userBadge"></div>
+      <button class="btn btn-outline" id="dailyBriefBtn" style="display:none;" onclick="handleCreateDailyBrief()">📝 오늘의 브리프 생성</button>
       <button class="btn btn-outline" id="refreshBtn" onclick="handleRefresh()">⟳ 데이터 새로고침</button>
       <button class="btn btn-gold" onclick="location.href='brief.html'">마켓 브리프 →</button>
     </div>
@@ -194,6 +195,7 @@
 <script src="js/auth.js"></script>
 <script src="js/market.js"></script>
 <script src="js/asset-order.js"></script>
+<script src="js/daily-brief-trigger.js"></script>
 <script>
 let mode = { equity: "1D", commodity: "1D" };
 let chartRange = { equity: "1Y", commodity: "1Y" };
@@ -439,6 +441,23 @@ async function handleRefresh() {
 function renderUserBadge(user) {
   const el = document.getElementById("userBadge");
   el.innerHTML = `<span class="name">${user.username}</span><button class="logout-link" onclick="logout()">로그아웃</button>`;
+  if (user.role === "admin") document.getElementById("dailyBriefBtn").style.display = "";
+}
+
+async function handleCreateDailyBrief() {
+  const btn = document.getElementById("dailyBriefBtn");
+  const status = document.getElementById("statusBar");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> 생성 요청 중…';
+  status.innerHTML = "";
+  try {
+    await triggerDailyBrief();
+    status.innerHTML = '<span>✓ 오늘의 브리프 생성이 시작되었습니다. GitHub Actions에서 완료되면 몇 분 내로 브리프 페이지에 반영됩니다.</span>';
+  } catch (e) {
+    status.innerHTML = `<span class="warn">⚠ 브리프 생성 요청 실패: ${e.message}</span>`;
+  }
+  btn.disabled = false;
+  btn.innerHTML = "📝 오늘의 브리프 생성";
 }
 
 async function init(user) {
