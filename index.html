@@ -54,6 +54,24 @@
   .edit-toggle-btn.active{background:var(--gold);color:#1b1f24;border-color:var(--gold);}
   .reset-slot-btn{font-family:inherit;border:1px solid var(--border);background:transparent;color:var(--neg);
     padding:6px 14px;border-radius:20px;font-size:12px;font-weight:bold;cursor:pointer;}
+  .manage-btn{font-family:inherit;border:1px solid var(--border);background:transparent;color:var(--navy2);
+    padding:6px 14px;border-radius:20px;font-size:12px;font-weight:bold;cursor:pointer;}
+  .manage-panel{display:none;margin-bottom:16px;padding:16px 18px;background:var(--card);border:1px solid var(--border);border-radius:6px;}
+  .manage-panel.open{display:block;}
+  .manage-panel h4{margin:0 0 8px;font-size:13px;color:var(--navy2);}
+  .manage-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .manage-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0;}
+  .auth-gate{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:1000;}
+  .auth-box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:36px 32px;width:320px;box-shadow:0 8px 30px rgba(0,0,0,.12);}
+  .auth-box h2{margin:0 0 6px;color:var(--navy);font-size:20px;}
+  .auth-note{font-size:12.5px;color:var(--muted);margin:0 0 18px;}
+  .auth-box input{width:100%;padding:10px 12px;margin-bottom:10px;border:1px solid var(--border);border-radius:5px;font-size:13px;font-family:inherit;box-sizing:border-box;}
+  .auth-box button{width:100%;padding:11px;border:none;border-radius:5px;background:var(--navy);color:#fff;font-weight:bold;font-size:13.5px;cursor:pointer;font-family:inherit;}
+  .auth-box button:hover{background:var(--navy2);}
+  .auth-error{color:var(--neg);font-size:12px;margin-top:10px;}
+  .user-badge{display:flex;align-items:center;gap:10px;color:#fff;font-size:12.5px;}
+  .user-badge .name{font-weight:bold;background:rgba(255,255,255,.15);padding:5px 12px;border-radius:20px;}
+  .user-badge .logout-link{color:#cfd8e6;cursor:pointer;text-decoration:underline;background:none;border:none;font-family:inherit;font-size:12.5px;padding:0;}
   .chart-panel{margin-top:18px;border:1px solid var(--border);border-radius:6px;padding:16px;background:#fafbfc;display:none;}
   .chart-panel.open{display:block;}
   .chart-panel-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:4px;}
@@ -70,13 +88,17 @@
 </head>
 <body>
 
+<div id="authGateContainer"></div>
+
+<div id="appRoot" style="display:none;">
 <header>
   <div class="toolbar">
     <div>
       <h1>글로벌 마켓 대시보드</h1>
       <div class="sub" id="lastUpdatedLine">데이터 불러오는 중…</div>
     </div>
-    <div style="display:flex;gap:10px;">
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div class="user-badge" id="userBadge"></div>
       <button class="btn btn-outline" id="refreshBtn" onclick="handleRefresh()">⟳ 데이터 새로고침</button>
       <button class="btn btn-gold" onclick="location.href='brief.html'">마켓 브리프 →</button>
     </div>
@@ -92,7 +114,22 @@
   <span class="slot-picker" id="slotPicker"></span>
   <button class="edit-toggle-btn" id="editToggleBtn">✎ 순서 편집</button>
   <button class="reset-slot-btn" id="resetSlotBtn">이 슬롯 초기화</button>
+  <button class="manage-btn" id="manageToggleBtn">＋／－ 자산 추가·삭제</button>
   <span class="label" id="editHint" style="display:none;">편집 모드: 타일을 드래그해 순서를 바꾸세요 (같은 구역 내에서만)</span>
+</div>
+
+<div class="manage-panel" id="managePanel">
+  <h4>표시할 자산 선택 (선택 해제 시 대시보드와 브리프에서 숨겨집니다)</h4>
+  <div class="manage-cols">
+    <div>
+      <div class="label" style="margin-bottom:6px;">주요 지수</div>
+      <div id="manageEquityList"></div>
+    </div>
+    <div>
+      <div class="label" style="margin-bottom:6px;">원자재</div>
+      <div id="manageCommodityList"></div>
+    </div>
+  </div>
 </div>
 
 <section>
@@ -152,7 +189,9 @@
 </main>
 
 <footer>데이터 출처: 주요 지수는 Yahoo Finance, 원자재(WTI·금·은·구리·니켈·옥수수·밀·대두)는 investing.com 기준입니다. 투자 참고용이며 투자 권유가 아닙니다.</footer>
+</div>
 
+<script src="js/auth.js"></script>
 <script src="js/market.js"></script>
 <script src="js/asset-order.js"></script>
 <script>
@@ -308,6 +347,10 @@ function renderSlotPicker() {
       renderSlotPicker();
       renderGrid("equity", "equityGrid");
       renderGrid("commodity", "commodityGrid");
+      if (document.getElementById("managePanel").classList.contains("open")) {
+        renderManageList("equity", "manageEquityList");
+        renderManageList("commodity", "manageCommodityList");
+      }
     };
     el.appendChild(btn);
   }
@@ -331,6 +374,36 @@ function setupOrderControls() {
     renderSlotPicker();
     renderGrid("equity", "equityGrid");
     renderGrid("commodity", "commodityGrid");
+  };
+}
+
+function renderManageList(group, listId) {
+  const el = document.getElementById(listId);
+  el.innerHTML = "";
+  getAllOrder(group).forEach(key => {
+    if (!ASSETS[key]) return;
+    const id = "manage_" + key;
+    const row = document.createElement("label");
+    row.className = "manage-item";
+    row.htmlFor = id;
+    row.innerHTML = `<input type="checkbox" id="${id}" ${isHidden(key) ? "" : "checked"}> ${ASSETS[key].name}`;
+    row.querySelector("input").onchange = (e) => {
+      setHidden(key, !e.target.checked);
+      renderGrid("equity", "equityGrid");
+      renderGrid("commodity", "commodityGrid");
+    };
+    el.appendChild(row);
+  });
+}
+
+function setupManagePanel() {
+  const panel = document.getElementById("managePanel");
+  document.getElementById("manageToggleBtn").onclick = () => {
+    panel.classList.toggle("open");
+    if (panel.classList.contains("open")) {
+      renderManageList("equity", "manageEquityList");
+      renderManageList("commodity", "manageCommodityList");
+    }
   };
 }
 
@@ -363,12 +436,20 @@ async function handleRefresh() {
   btn.innerHTML = "⟳ 데이터 새로고침";
 }
 
-async function init() {
+function renderUserBadge(user) {
+  const el = document.getElementById("userBadge");
+  el.innerHTML = `<span class="name">${user.username}</span><button class="logout-link" onclick="logout()">로그아웃</button>`;
+}
+
+async function init(user) {
+  renderUserBadge(user);
+  document.getElementById("appRoot").style.display = "";
   setupToggle("toggleEquity", "equity", "equityGrid");
   setupToggle("toggleCommodity", "commodity", "commodityGrid");
   setupRangeToggle("equityRangeToggle", "equity");
   setupRangeToggle("commodityRangeToggle", "commodity");
   setupOrderControls();
+  setupManagePanel();
   try {
     const lastRowDate = await loadMarketHistory(false);
     renderLastUpdated(lastRowDate);
@@ -380,7 +461,7 @@ async function init() {
   }
 }
 
-init();
+requireLogin(document.getElementById("authGateContainer"), init);
 </script>
 
 </body>

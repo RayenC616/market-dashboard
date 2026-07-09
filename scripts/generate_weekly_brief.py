@@ -437,6 +437,7 @@ def archive_previous_brief(new_session_date):
     old_html = old_html.replace("location.href='index.html'", "location.href='../index.html'")
     old_html = old_html.replace("location.href='archive.html'", "location.href='../archive.html'")
     old_html = old_html.replace('src="js/asset-order.js"', 'src="../js/asset-order.js"')
+    old_html = old_html.replace('src="js/auth.js"', 'src="../js/auth.js"')
 
     meta_match = re.search(r'<!-- BRIEF_META headline="([^"]*)" date_label="([^"]*)" -->', old_html)
     if meta_match:

@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>마켓 브리프 아카이브</title>
+<script src="js/auth.js"></script>
+<script>
+  // Admin-only page: bounce anyone else straight back to the dashboard.
+  // (Client-side only — see js/auth.js for why this isn't real access control.)
+  const _authUser = getCurrentUser();
+  if (!_authUser || _authUser.role !== "admin") {
+    location.replace("index.html");
+  }
+</script>
 <style>
   :root{
     --navy:#0b1f3a; --navy2:#13294b; --gold:#b08d57; --bg:#f4f5f7; --card:#ffffff; --border:#dfe3e8; --muted:#5b6470;
@@ -27,6 +36,9 @@
   .entry .headline{font-size:13px;color:var(--muted);margin-top:3px;}
   .entry .arrow{color:var(--gold);font-size:18px;}
   footer{text-align:center;font-size:11px;color:var(--muted);padding:20px;}
+  .user-badge{display:flex;align-items:center;gap:10px;color:#fff;font-size:12.5px;margin-right:8px;}
+  .user-badge .name{font-weight:bold;background:rgba(255,255,255,.15);padding:5px 12px;border-radius:20px;}
+  .user-badge .logout-link{color:#cfd8e6;cursor:pointer;text-decoration:underline;background:none;border:none;font-family:inherit;font-size:12.5px;padding:0;}
 </style>
 </head>
 <body>
@@ -37,7 +49,8 @@
       <h1>마켓 브리프 아카이브</h1>
       <div class="sub">지금까지 발행된 모든 일간 브리프</div>
     </div>
-    <div>
+    <div style="display:flex;align-items:center;">
+      <div class="user-badge" id="userBadge"></div>
       <button class="btn btn-outline" onclick="location.href='index.html'">← 대시보드</button>
       <button class="btn btn-outline" onclick="location.href='brief.html'">최신 브리프</button>
     </div>
@@ -64,6 +77,13 @@
 </main>
 
 <footer>일간 마켓 브리프가 새로 발행될 때마다 이곳에 자동으로 추가됩니다.</footer>
+
+<script>
+if (_authUser) {
+  document.getElementById("userBadge").innerHTML =
+    `<span class="name">${_authUser.username}</span><button class="logout-link" onclick="logout()">로그아웃</button>`;
+}
+</script>
 
 </body>
 </html>
