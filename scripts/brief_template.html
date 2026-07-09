@@ -81,7 +81,7 @@
     <div style="display:flex;align-items:center;">
       <div class="user-badge" id="userBadge"></div>
       <button class="btn btn-outline" onclick="location.href='index.html'">← 대시보드</button>
-      <button class="btn btn-outline" id="archiveLinkBtn" style="display:none;" onclick="location.href='archive.html'">아카이브</button>
+      <button class="btn btn-outline" onclick="location.href='archive.html'">아카이브</button>
       <button class="btn btn-gold" onclick="downloadPage()">⬇ HTML로 저장</button>
       <button class="btn btn-gold" onclick="window.print()">⬇ PDF로 저장</button>
     </div>
@@ -151,7 +151,6 @@
 function renderUserBadge(user) {
   document.getElementById("userBadge").innerHTML =
     `<span class="name">${user.username}</span><button class="logout-link" onclick="logout()">로그아웃</button>`;
-  if (user.role === "admin") document.getElementById("archiveLinkBtn").style.display = "";
 }
 
 requireLogin(document.getElementById("authGateContainer"), function(user) {

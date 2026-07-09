@@ -6,10 +6,11 @@
 <title>마켓 브리프 아카이브</title>
 <script src="js/auth.js"></script>
 <script>
-  // Admin-only page: bounce anyone else straight back to the dashboard.
-  // (Client-side only — see js/auth.js for why this isn't real access control.)
+  // Any logged-in user can view the archive (viewing isn't the restricted
+  // action — only the archiving process itself is admin-only, and that's
+  // fully automated, not a UI button any user could trigger anyway).
   const _authUser = getCurrentUser();
-  if (!_authUser || _authUser.role !== "admin") {
+  if (!_authUser) {
     location.replace("index.html");
   }
 </script>

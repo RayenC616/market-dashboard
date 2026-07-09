@@ -38,7 +38,7 @@ You can trigger either workflow immediately instead of waiting for its schedule:
 
 ## Login (read this before relying on it)
 
-**This is not real security.** There is no server, so every page ships a login gate that checks the entered ID/password against a table sitting in plain text in `js/auth.js` — anyone can view-source the page and read every password, including Admin's, and `archive.html` (or any other file) is still directly reachable by URL no matter what the login state is. What this *does* do: it organizes who's using the dashboard, gives each of up to 10 people their own 3 customization slots, and hides the archive button's UI from non-admin users. Treat it as a courtesy gate for a small trusted group, not access control.
+**This is not real security.** There is no server, so every page ships a login gate that checks the entered ID/password against a table sitting in plain text in `js/auth.js` — anyone can view-source the page and read every password, including Admin's, and every page is still directly reachable by URL no matter what the login state is. What this *does* do: it organizes who's using the dashboard and gives each of up to 10 people their own 3 customization slots. Treat it as a courtesy gate for a small trusted group, not access control.
 
 **The 10 accounts** (username / password / role):
 
@@ -57,7 +57,7 @@ You can trigger either workflow immediately instead of waiting for its schedule:
 
 To change a password or add/remove a user, edit the `USERS` table at the top of `js/auth.js` directly (max 10 slots by design, matching the 10 named accounts above).
 
-Login state is stored in `localStorage` per browser (not per visit), so a visitor stays logged in until they click "로그아웃". The admin role gets an "아카이브" button on the dashboard and brief page and can open `archive.html`; regular users don't see that button, and direct navigation to `archive.html` bounces non-admins back to the dashboard (again, a UI nicety, not enforcement).
+Login state is stored in `localStorage` per browser (not per visit), so a visitor stays logged in until they click "로그아웃". Any logged-in user — admin or regular — can open `archive.html` and read past briefs; what's actually admin-only is *archiving itself*, and that's not a button anyone clicks anyway — it's the fully automated weekly GitHub Action. There's no UI action a regular user could use to trigger or edit archiving in the first place.
 
 ## Custom asset order & visibility (3 save slots per user)
 
