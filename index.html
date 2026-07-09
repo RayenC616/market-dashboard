@@ -37,6 +37,23 @@
   .tile .t-name{font-size:12.5px;font-weight:bold;opacity:.95;}
   .tile .t-price{font-size:16px;font-weight:bold;margin:6px 0 2px;}
   .tile .t-pct{font-size:13.5px;font-weight:bold;}
+  .tile.editable{cursor:grab;}
+  .tile.editable .t-name::before{content:"⠿ ";opacity:.8;}
+  .tile.dragging{opacity:.4;}
+  .tile.drag-over{outline:2px dashed #fff;outline-offset:2px;}
+  .order-bar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;padding:14px 16px;
+    background:var(--card);border:1px solid var(--border);border-radius:6px;}
+  .order-bar .label{font-size:12.5px;color:var(--muted);font-weight:bold;}
+  .slot-picker{display:inline-flex;gap:4px;flex-wrap:wrap;}
+  .slot-btn{font-family:inherit;width:26px;height:26px;border-radius:5px;border:1px solid var(--border);
+    background:#eef1f5;color:var(--muted);font-size:11.5px;font-weight:bold;cursor:pointer;position:relative;}
+  .slot-btn.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .slot-btn.customized::after{content:"";position:absolute;top:2px;right:2px;width:5px;height:5px;border-radius:50%;background:var(--gold);}
+  .edit-toggle-btn{font-family:inherit;border:1px solid var(--border);background:#eef1f5;color:var(--navy2);
+    padding:6px 14px;border-radius:20px;font-size:12px;font-weight:bold;cursor:pointer;}
+  .edit-toggle-btn.active{background:var(--gold);color:#1b1f24;border-color:var(--gold);}
+  .reset-slot-btn{font-family:inherit;border:1px solid var(--border);background:transparent;color:var(--neg);
+    padding:6px 14px;border-radius:20px;font-size:12px;font-weight:bold;cursor:pointer;}
   .chart-panel{margin-top:18px;border:1px solid var(--border);border-radius:6px;padding:16px;background:#fafbfc;display:none;}
   .chart-panel.open{display:block;}
   .chart-panel-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:4px;}
@@ -69,6 +86,14 @@
 <main>
 
 <div class="status-bar" id="statusBar" style="margin-bottom:16px;"></div>
+
+<div class="order-bar">
+  <span class="label">정렬 슬롯</span>
+  <span class="slot-picker" id="slotPicker"></span>
+  <button class="edit-toggle-btn" id="editToggleBtn">✎ 순서 편집</button>
+  <button class="reset-slot-btn" id="resetSlotBtn">이 슬롯 초기화</button>
+  <span class="label" id="editHint" style="display:none;">편집 모드: 타일을 드래그해 순서를 바꾸세요 (같은 구역 내에서만)</span>
+</div>
 
 <section>
   <h2>
@@ -129,11 +154,14 @@
 <footer>데이터 출처: 주요 지수는 Yahoo Finance, 원자재(WTI·금·은·구리·니켈·옥수수·밀·대두)는 investing.com 기준입니다. 투자 참고용이며 투자 권유가 아닙니다.</footer>
 
 <script src="js/market.js"></script>
+<script src="js/asset-order.js"></script>
 <script>
 let mode = { equity: "1D", commodity: "1D" };
 let chartRange = { equity: "1Y", commodity: "1Y" };
 let selectedTile = { equity: null, commodity: null };
 let chartInstances = { equity: null, commodity: null };
+let editMode = false;
+let dragKey = null;
 
 function fmtPrice(stats, key) {
   const a = ASSETS[key];
@@ -152,12 +180,16 @@ function pctColor(pct) {
 function renderGrid(group, gridId) {
   const grid = document.getElementById(gridId);
   grid.innerHTML = "";
-  Object.keys(ASSETS).filter(k => ASSETS[k].group === group).forEach(key => {
+  getOrder(group).forEach(key => {
+    if (!ASSETS[key] || ASSETS[key].group !== group) return;
     const stats = getStats(key);
     if (!stats) return;
     const pct = mode[group] === "1D" ? stats.pct1D : stats.pct1W;
     const tile = document.createElement("div");
-    tile.className = "tile" + (selectedTile[group] === key ? " selected" : "");
+    tile.className = "tile" + (selectedTile[group] === key ? " selected" : "") + (editMode ? " editable" : "");
+    tile.dataset.key = key;
+    tile.dataset.group = group;
+    tile.draggable = editMode;
     tile.style.background = pctColor(pct);
     tile.innerHTML = `
       <div class="t-name">${stats.name}</div>
@@ -165,12 +197,44 @@ function renderGrid(group, gridId) {
       <div class="t-pct">${pct === null ? "N/A" : (pct >= 0 ? "+" : "") + pct.toFixed(2) + "%"}</div>
     `;
     tile.onclick = () => {
+      if (editMode) return;
       selectedTile[group] = (selectedTile[group] === key) ? null : key;
       renderGrid(group, gridId);
       renderChart(group, key === selectedTile[group] ? key : null);
     };
+    tile.addEventListener("dragstart", () => {
+      dragKey = key;
+      tile.classList.add("dragging");
+    });
+    tile.addEventListener("dragend", () => {
+      tile.classList.remove("dragging");
+    });
+    tile.addEventListener("dragover", (e) => {
+      if (dragKey === null || dragKey === key) return;
+      e.preventDefault();
+      tile.classList.add("drag-over");
+    });
+    tile.addEventListener("dragleave", () => {
+      tile.classList.remove("drag-over");
+    });
+    tile.addEventListener("drop", (e) => {
+      e.preventDefault();
+      tile.classList.remove("drag-over");
+      if (dragKey === null || dragKey === key) return;
+      reorderGroup(group, dragKey, key);
+      dragKey = null;
+      renderGrid(group, gridId);
+    });
     grid.appendChild(tile);
   });
+}
+
+function reorderGroup(group, movedKey, targetKey) {
+  const newOrder = getOrder(group).filter(k => k !== movedKey);
+  const insertAt = newOrder.indexOf(targetKey);
+  if (insertAt < 0) return;
+  newOrder.splice(insertAt, 0, movedKey);
+  setOrder(group, newOrder);
 }
 
 function renderChart(group, key) {
@@ -230,6 +294,46 @@ function setupRangeToggle(toggleId, group) {
   });
 }
 
+function renderSlotPicker() {
+  const el = document.getElementById("slotPicker");
+  el.innerHTML = "";
+  const active = getActiveSlot();
+  for (let n = 1; n <= ASSET_ORDER_SLOT_COUNT; n++) {
+    const btn = document.createElement("button");
+    btn.className = "slot-btn" + (n === active ? " active" : "") + (isSlotCustomized(n) ? " customized" : "");
+    btn.textContent = n;
+    btn.title = `슬롯 ${n}` + (isSlotCustomized(n) ? " (커스텀 순서 저장됨)" : " (기본 순서)");
+    btn.onclick = () => {
+      setActiveSlot(n);
+      renderSlotPicker();
+      renderGrid("equity", "equityGrid");
+      renderGrid("commodity", "commodityGrid");
+    };
+    el.appendChild(btn);
+  }
+}
+
+function setupOrderControls() {
+  renderSlotPicker();
+
+  const editBtn = document.getElementById("editToggleBtn");
+  const editHint = document.getElementById("editHint");
+  editBtn.onclick = () => {
+    editMode = !editMode;
+    editBtn.classList.toggle("active", editMode);
+    editHint.style.display = editMode ? "" : "none";
+    renderGrid("equity", "equityGrid");
+    renderGrid("commodity", "commodityGrid");
+  };
+
+  document.getElementById("resetSlotBtn").onclick = () => {
+    resetActiveSlot();
+    renderSlotPicker();
+    renderGrid("equity", "equityGrid");
+    renderGrid("commodity", "commodityGrid");
+  };
+}
+
 function renderLastUpdated(lastRowDate) {
   const line = document.getElementById("lastUpdatedLine");
   if (lastRowDate) {
@@ -264,6 +368,7 @@ async function init() {
   setupToggle("toggleCommodity", "commodity", "commodityGrid");
   setupRangeToggle("equityRangeToggle", "equity");
   setupRangeToggle("commodityRangeToggle", "commodity");
+  setupOrderControls();
   try {
     const lastRowDate = await loadMarketHistory(false);
     renderLastUpdated(lastRowDate);

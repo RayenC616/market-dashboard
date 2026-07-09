@@ -6,6 +6,7 @@
 <!-- BRIEF_META headline="{{HEADLINE_ESCAPED}}" date_label="{{WEEK_LABEL}}" -->
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="js/asset-order.js"></script>
 <style>
   :root{
     --navy:#0b1f3a; --navy2:#13294b; --gold:#b08d57; --pos:#0a7d3c; --neg:#b3261e;
@@ -82,19 +83,19 @@
   <h2>주요 지수 및 원자재</h2>
 
   <h3>주요 지수 — {{SESSION_DATE}} 종가</h3>
-  <table>
+  <table id="indexTable">
     <tr><th>지수</th><th>지역</th><th>종가</th><th>1일</th><th>1주</th><th>1개월</th><th>연초 대비</th></tr>
 {{INDEX_ROWS}}
   </table>
   <div class="chart-box"><canvas id="ytdLineChart" height="100"></canvas></div>
-  <p class="note">모든 수치는 각 지수의 일별 과거 가격 데이터를 바탕으로 직접 산출했습니다. 연초 대비(YTD) 수익률은 각 지수의 전년도 마지막 거래일 종가를 100으로 환산한 값입니다.</p>
+  <p class="note">모든 수치는 각 지수의 일별 과거 가격 데이터를 바탕으로 직접 산출했습니다. 연초 대비(YTD) 수익률은 각 지수의 전년도 마지막 거래일 종가를 100으로 환산한 값입니다. 표 순서는 대시보드에서 커스터마이즈한 정렬을 따릅니다.</p>
 
   <h3 style="margin-top:18px;">원자재 — {{SESSION_DATE}} 종가</h3>
-  <table>
+  <table id="commodityTable">
     <tr><th>원자재</th><th>종가</th><th>1일 변동</th><th>1주 변동</th></tr>
 {{COMMODITY_ROWS}}
   </table>
-  <p class="note">선물 최근월물 기준입니다. 원자재 가격은 investing.com, 주요 지수는 Yahoo Finance 데이터를 기준으로 합니다.</p>
+  <p class="note">선물 최근월물 기준입니다. 원자재 가격은 investing.com, 주요 지수는 Yahoo Finance 데이터를 기준으로 합니다. 표 순서는 대시보드에서 커스터마이즈한 정렬을 따릅니다.</p>
 </section>
 
 <section>
@@ -130,6 +131,9 @@
 <footer>기관 배포를 위해 작성되었습니다. 데이터는 위에 명시된 공개 뉴스 및 시장 데이터 출처를 바탕으로 작성되었으며, 투자 권유가 아닙니다.</footer>
 
 <script>
+applyOrderToTable("#indexTable", "equity");
+applyOrderToTable("#commodityTable", "commodity");
+
 function downloadPage(){
   const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
   const blob = new Blob([html], {type:'text/html'});
@@ -144,8 +148,8 @@ function downloadPage(){
 const ytdData = {{YTD_DATA_JSON}};
 
 const ytdColors = {
-  "S&P500 지수": "#0b1f3a", "나스닥종합지수": "#13294b", "STOXX 유럽600": "#7a8ba6",
-  "니케이225": "#8a6d3b", "코스피": "#b08d57", "항셍지수": "#3a5a9b"
+  "S&P500 지수": "#2a78d6", "나스닥종합지수": "#1baf7a", "STOXX 유럽600": "#eda100",
+  "니케이225": "#008300", "코스피": "#4a3aa7", "항셍지수": "#e34948"
 };
 
 new Chart(document.getElementById('ytdLineChart'), {

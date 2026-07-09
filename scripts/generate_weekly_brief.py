@@ -359,7 +359,7 @@ def render_index_table(stats):
             continue
         s = stats[k]
         rows.append(
-            f'    <tr><td>{ASSET_META[k]["name"]}</td><td>{ASSET_META[k]["region"]}</td>'
+            f'    <tr data-key="{k}"><td>{ASSET_META[k]["name"]}</td><td>{ASSET_META[k]["region"]}</td>'
             f'<td>{s["last"]:,.2f}</td>'
             f'<td class="{cls(s["pct1D"])}">{fmt_pct(s["pct1D"])}</td>'
             f'<td class="{cls(s["pct1W"])}">{fmt_pct(s["pct1W"])}</td>'
@@ -376,7 +376,7 @@ def render_commodity_table(stats):
             continue
         s = stats[k]
         rows.append(
-            f'    <tr><td>{ASSET_META[k]["name"]}</td><td>{s["last"]:,.4f} {ASSET_META[k]["unit"]}</td>'
+            f'    <tr data-key="{k}"><td>{ASSET_META[k]["name"]}</td><td>{s["last"]:,.4f} {ASSET_META[k]["unit"]}</td>'
             f'<td class="{cls(s["pct1D"])}">{fmt_pct(s["pct1D"])}</td>'
             f'<td class="{cls(s["pct1W"])}">{fmt_pct(s["pct1W"])}</td></tr>'
         )
@@ -436,6 +436,7 @@ def archive_previous_brief(new_session_date):
     old_html = BRIEF_PATH.read_text(encoding="utf-8")
     old_html = old_html.replace("location.href='index.html'", "location.href='../index.html'")
     old_html = old_html.replace("location.href='archive.html'", "location.href='../archive.html'")
+    old_html = old_html.replace('src="js/asset-order.js"', 'src="../js/asset-order.js"')
 
     meta_match = re.search(r'<!-- BRIEF_META headline="([^"]*)" date_label="([^"]*)" -->', old_html)
     if meta_match:
