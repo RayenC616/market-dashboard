@@ -35,6 +35,21 @@ INVESTING_SLUGS = {
     "WHEAT": "us-wheat",
     "SOY": "us-soybeans",
 }
+# Fallback source when investing.com is unreachable (it periodically blocks
+# GitHub Actions' shared runner IPs). No reliable Yahoo ticker exists for
+# nickel, so it has no fallback and stays blank on a bad day rather than
+# guessing. Fallback values are raw Yahoo futures closes with no basis
+# adjustment, so they may sit slightly off investing.com's own series for
+# that one day (small, usually <5%) rather than match it exactly.
+YAHOO_FALLBACK_SYMBOLS = {
+    "WTI": "CL=F",
+    "GOLD": "GC=F",
+    "SILVER": "SI=F",
+    "COPPER": "HG=F",
+    "CORN": "ZC=F",
+    "WHEAT": "ZW=F",
+    "SOY": "ZS=F",
+}
 COPPER_TONNE_TO_LB = 2204.62
 COLUMNS = ["SPX", "NDX", "STOXX", "NKY", "HSI", "KOSPI", "WTI", "GOLD", "SILVER",
            "COPPER", "NICKEL", "CORN", "WHEAT", "SOY"]
@@ -64,7 +79,10 @@ def fetch_investing_price(slug):
     resp.raise_for_status()
     match = re.search(r'"last":([0-9.]+),"changePcr":(-?[0-9.]+)', resp.text)
     if not match:
-        return None
+        raise RuntimeError(
+            f"page loaded but price pattern not found (status {resp.status_code}, "
+            f"{len(resp.text)} bytes) - likely a bot-check/interstitial page"
+        )
     return float(match.group(1))
 
 
@@ -108,6 +126,14 @@ def main():
             values[key] = price
         except Exception as e:
             print(f"WARN: failed to fetch {key} (investing.com/{slug}): {e}")
+            fallback_symbol = YAHOO_FALLBACK_SYMBOLS.get(key)
+            if fallback_symbol:
+                try:
+                    _, price = fetch_yahoo_last_close(fallback_symbol)
+                    values[key] = price
+                    print(f"  -> used Yahoo fallback {fallback_symbol}: {price}")
+                except Exception as e2:
+                    print(f"  -> Yahoo fallback {fallback_symbol} also failed: {e2}")
 
     new_row = [None] * len(header)
     new_row[date_col - 1] = target_date
