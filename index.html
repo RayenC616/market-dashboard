@@ -194,9 +194,7 @@
 
 <script src="js/auth.js"></script>
 <script src="js/market.js"></script>
-<script src="js/asset-order.js"></script>
-<script src="js/daily-brief-trigger.js"></script>
-<script>
+<script src="js/asset-order.js"></script><script>
 let mode = { equity: "1D", commodity: "1D" };
 let chartRange = { equity: "1Y", commodity: "1Y" };
 let selectedTile = { equity: null, commodity: null };
@@ -444,20 +442,12 @@ function renderUserBadge(user) {
   if (user.role === "admin") document.getElementById("dailyBriefBtn").style.display = "";
 }
 
-async function handleCreateDailyBrief() {
-  const btn = document.getElementById("dailyBriefBtn");
+const DAILY_BRIEF_ACTIONS_URL = "https://github.com/RayenC616/market-dashboard/actions/workflows/daily-brief.yml";
+
+function handleCreateDailyBrief() {
   const status = document.getElementById("statusBar");
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> 생성 요청 중…';
-  status.innerHTML = "";
-  try {
-    await triggerDailyBrief();
-    status.innerHTML = '<span>✓ 오늘의 브리프 생성이 시작되었습니다. GitHub Actions에서 완료되면 몇 분 내로 브리프 페이지에 반영됩니다.</span>';
-  } catch (e) {
-    status.innerHTML = `<span class="warn">⚠ 브리프 생성 요청 실패: ${e.message}</span>`;
-  }
-  btn.disabled = false;
-  btn.innerHTML = "📝 오늘의 브리프 생성";
+  window.open(DAILY_BRIEF_ACTIONS_URL, "_blank", "noopener");
+  status.innerHTML = '<span>GitHub Actions 페이지를 새 탭에서 열었습니다. 오른쪽의 "Run workflow" 버튼을 눌러 실행하세요 (GitHub 로그인 및 저장소 권한 필요). 완료되면 몇 분 내로 브리프 페이지에 반영됩니다.</span>';
 }
 
 async function init(user) {

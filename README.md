@@ -12,19 +12,17 @@ Static market dashboard and brief generator, in Korean. No app backend — plain
 - `scripts/generate_daily_brief.py` + `scripts/brief_template_daily.html` — Daily brief: 1-day mover lookback, a single-date period label, archived under `category="daily"`.
 - `.github/workflows/update-market-data.yml` — Daily cron (22:00 UTC / 07:00 KST).
 - `.github/workflows/weekly-brief.yml` — Weekly cron, Monday 07:00 KST (22:00 UTC Sunday).
-- `.github/workflows/daily-brief.yml` — **No schedule** — `workflow_dispatch` only, triggered by the admin's dashboard button via the Cloudflare Worker in `worker/`.
-- `worker/` — A small Cloudflare Worker that lets the dashboard button trigger `daily-brief.yml` without ever exposing a GitHub token to the browser. See `worker/README.md` — you need to deploy this yourself (Cloudflare account required).
+- `.github/workflows/daily-brief.yml` — **No schedule** — `workflow_dispatch` only. The admin's dashboard button opens this workflow's GitHub Actions page so they can click "Run workflow" there directly (no separate infrastructure to deploy).
 - `js/market.js` — Ticker metadata, stats/chart logic, and the in-browser Excel parser (via SheetJS).
 - `js/asset-order.js` — Per-user asset-ordering/hide-show module (see below).
 - `js/auth.js` — Client-side login gate and the 10-user credential table (see below).
-- `js/daily-brief-trigger.js` — Calls the deployed Worker to trigger the daily brief; needs `WORKER_URL` filled in after you deploy (see `worker/README.md`).
 
 ## How the data flow works
 
 1. Daily, GitHub Actions runs `update_market_data.py`, which fetches each asset's close exactly once and commits the new row to `data/market_history.xlsx`.
 2. Every visitor's browser just reads that same committed file — no per-visitor API calls, no CORS proxy, no rate limits. The dashboard's "Refresh Data" button re-fetches the Excel file (cache-busted) rather than calling Yahoo/investing.com itself.
 3. Weekly (Monday mornings), `generate_weekly_brief.py` reads the same Excel file, asks Claude to research and write that week's brief, and archives the outgoing one automatically.
-4. On demand, the admin clicks "📝 오늘의 브리프 생성" on the dashboard, which (via the Worker) runs `generate_daily_brief.py` the same way.
+4. On demand, the admin clicks "📝 오늘의 브리프 생성" on the dashboard, which opens `daily-brief.yml`'s GitHub Actions page in a new tab; clicking "Run workflow" there runs `generate_daily_brief.py` the same way. This requires being logged into GitHub with write access to the repo — the button is a shortcut to the right page, not a fully automated one-click trigger (that would need a server component to hold a GitHub token, which this static site intentionally has none of).
 
 ## One-time setup
 
@@ -34,8 +32,6 @@ Static market dashboard and brief generator, in Korean. No app backend — plain
 1. Create a key at [console.anthropic.com](https://console.anthropic.com) (requires a funded Anthropic Console account — this calls the API per-brief, at real cost).
 2. In the repo: Settings → Secrets and variables → Actions → New repository secret → name it `ANTHROPIC_API_KEY`, paste the key.
 3. Before relying on this in production, confirm `web_search_20250305` is still the current web-search tool identifier in [Anthropic's tool-use docs](https://docs.anthropic.com) — this was written against the API as documented at the time and the identifier may have since changed.
-
-**For the daily brief's dashboard button specifically:** you also need to deploy the Cloudflare Worker — see `worker/README.md` for the full walkthrough (create a scoped GitHub token, `wrangler login`/`deploy`, then point `js/daily-brief-trigger.js`'s `WORKER_URL` at it). Until that's done, clicking the button shows a clear error instead of failing silently.
 
 You can trigger any of the three workflows manually instead of waiting for a schedule (or a button click): **Actions tab → (workflow name) → Run workflow**.
 
