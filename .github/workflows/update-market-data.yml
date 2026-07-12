@@ -2,8 +2,9 @@ name: Update Market Data
 
 on:
   schedule:
-    # 22:00 UTC = 07:00 KST the next day
-    - cron: '0 22 * * *'
+    # 22:17 UTC = 07:17 KST the next day (off the hour: GitHub delays/drops
+    # on-the-hour schedules most often under load)
+    - cron: '17 22 * * *'
   workflow_dispatch: {}
 
 permissions:

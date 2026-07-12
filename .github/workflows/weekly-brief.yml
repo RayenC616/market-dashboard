@@ -2,8 +2,9 @@ name: Weekly Market Brief
 
 on:
   schedule:
-    # 22:00 UTC Sunday = 07:00 KST Monday
-    - cron: '0 22 * * 0'
+    # 22:25 UTC Sunday = 07:25 KST Monday (off the hour, and a few minutes
+    # after the daily data update so it reads that day's freshly appended row)
+    - cron: '25 22 * * 0'
   workflow_dispatch: {}
 
 permissions:
