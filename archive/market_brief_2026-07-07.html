@@ -1,238 +1,503 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>글로벌 마켓 브리프 — 2026년 7월 7일</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Daily Global Markets Brief — 2026-07-07</title>
 <style>
-  :root{
-    --navy:#0b1f3a; --navy2:#13294b; --gold:#b08d57; --pos:#0a7d3c; --neg:#b3261e;
-    --bg:#f4f5f7; --card:#ffffff; --border:#dfe3e8; --muted:#5b6470;
+  :root {
+    --navy: #0d1b2a;
+    --navy2: #1a2332;
+    --navy3: #243040;
+    --gold: #C8A951;
+    --gold2: #e6c97a;
+    --light: #f5f6f7;
+    --gray: #e8eaec;
+    --text: #1c2a38;
+    --muted: #5a6a7a;
+    --positive: #15803d;
+    --negative: #dc2626;
+    --card: #ffffff;
   }
-  *{box-sizing:border-box;}
-  body{font-family:'Malgun Gothic','Apple SD Gothic Neo',Georgia,serif;background:var(--bg);color:#1b1f24;margin:0;}
-  header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:28px 40px;}
-  header h1{margin:0 0 4px;font-size:26px;letter-spacing:.3px;}
-  header .sub{font-family:'Malgun Gothic','Apple SD Gothic Neo',Arial,sans-serif;font-size:13px;color:#cfd8e6;}
-  .toolbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-  .btn{font-family:inherit;border:none;padding:10px 16px;border-radius:4px;
-    font-size:12.5px;font-weight:bold;cursor:pointer;margin-left:8px;}
-  .btn-gold{background:var(--gold);color:#1b1f24;}
-  .btn-gold:hover{background:#c39c63;}
-  .btn-outline{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5);}
-  .btn-outline:hover{background:rgba(255,255,255,.12);}
-  main{max-width:1180px;margin:0 auto;padding:28px 24px 60px;}
-  section{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:22px 26px;margin-bottom:22px;}
-  h2{font-size:18px;color:var(--navy);border-bottom:2px solid var(--gold);padding-bottom:8px;margin-top:0;}
-  h3{font-size:14px;color:var(--navy2);font-family:'Malgun Gothic','Apple SD Gothic Neo',Arial,sans-serif;letter-spacing:.3px;margin-bottom:6px;}
-  p,li{font-size:14.5px;line-height:1.7;}
-  .exec{font-size:15.5px;line-height:1.85;}
-  table{width:100%;border-collapse:collapse;font-family:'Malgun Gothic','Apple SD Gothic Neo',Arial,sans-serif;font-size:13px;margin-bottom:14px;}
-  th,td{padding:7px 10px;border-bottom:1px solid var(--border);text-align:right;}
-  th:first-child,td:first-child{text-align:left;}
-  th{background:#eef1f5;color:var(--navy2);font-weight:600;}
-  .pos{color:var(--pos);font-weight:bold;}
-  .neg{color:var(--neg);font-weight:bold;}
-  .chart-box{background:#fafbfc;border:1px solid var(--border);border-radius:5px;padding:12px;}
-  .note{font-family:'Malgun Gothic','Apple SD Gothic Neo',Arial,sans-serif;font-size:11.5px;color:var(--muted);margin-top:6px;}
-  .callout{background:#fbf6ea;border-left:4px solid var(--gold);padding:12px 16px;margin:12px 0;font-size:14px;}
-  .src{font-family:'Malgun Gothic','Apple SD Gothic Neo',Arial,sans-serif;font-size:11px;color:var(--muted);}
-  .src a{color:#3a5a9b;}
-  ul{margin:8px 0;padding-left:20px;}
-  .stock-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-  .stock-col h3{margin-bottom:12px;}
-  .stock-card{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px 14px;margin-bottom:10px;font-family:'Malgun Gothic','Apple SD Gothic Neo',Arial,sans-serif;}
-  .stock-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px;}
-  .stock-ticker{font-weight:800;font-size:14px;color:var(--navy2);}
-  .stock-name{font-size:11.5px;color:var(--muted);margin-bottom:5px;}
-  .stock-chg{font-weight:bold;font-size:14px;}
-  .stock-why{font-size:12.5px;color:#1b1f24;line-height:1.6;}
-  footer{text-align:center;font-family:'Malgun Gothic','Apple SD Gothic Neo',Arial,sans-serif;font-size:11px;color:var(--muted);padding:20px;}
-  @media print{ .no-print{display:none;} body{background:#fff;} section{border:none;} }
-  @media (max-width:720px){ .stock-grid{grid-template-columns:1fr;} }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Georgia', serif; background: #f0f2f5; color: var(--text); font-size: 14px; line-height: 1.6; }
+  
+  header { background: var(--navy); border-bottom: 3px solid var(--gold); padding: 28px 40px 20px; }
+  header h1 { color: var(--gold); font-size: 22px; letter-spacing: 0.06em; text-transform: uppercase; }
+  header .subtitle { color: #a0b0c0; font-size: 13px; margin-top: 6px; }
+  header .date-badge { background: var(--gold); color: var(--navy); font-size: 12px; font-weight: bold; padding: 4px 12px; border-radius: 3px; display: inline-block; margin-top: 10px; font-family: 'Helvetica Neue', sans-serif; letter-spacing: 0.05em; }
+  
+  .container { max-width: 1100px; margin: 0 auto; padding: 24px 20px; }
+  
+  .card { background: var(--card); border-radius: 6px; border: 1px solid var(--gray); margin-bottom: 24px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .card-header { background: var(--navy); color: var(--gold); font-size: 12px; font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 20px; border-left: 4px solid var(--gold); }
+  .card-body { padding: 20px; }
+  
+  table { width: 100%; border-collapse: collapse; font-size: 13px; font-family: 'Helvetica Neue', sans-serif; }
+  th { background: var(--navy); color: var(--gold2); font-size: 11px; font-weight: bold; letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 12px; text-align: left; }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--gray); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover { background: #f8f9fa; }
+  td.num { text-align: right; font-family: 'Courier New', monospace; font-size: 13px; }
+  td.positive { color: var(--positive); font-weight: bold; }
+  td.negative { color: var(--negative); font-weight: bold; }
+  
+  .exec-text { font-size: 14px; line-height: 1.75; color: var(--text); }
+  .exec-text br { display: block; margin-bottom: 4px; }
+  
+  .sector-narrative { font-size: 13px; line-height: 1.7; color: var(--text); }
+  
+  .macro-narrative p { margin-bottom: 12px; font-size: 13px; line-height: 1.75; }
+  
+  .attn-item { background: #fff8e6; border-left: 4px solid var(--gold); padding: 14px 18px; margin-bottom: 14px; border-radius: 0 4px 4px 0; }
+  .attn-item p { font-size: 13px; line-height: 1.7; }
+  
+  .sources-list { font-size: 12px; color: var(--muted); }
+  .sources-list li { margin-bottom: 5px; list-style: decimal; margin-left: 20px; }
+  .sources-list a { color: #1d4ed8; text-decoration: none; }
+  .sources-list a:hover { text-decoration: underline; }
+  
+  .chart-wrap { background: var(--navy2); padding: 16px; border-radius: 6px; margin-top: 8px; overflow-x: auto; }
+  
+  .kpi-row { display: flex; gap: 16px; flex-wrap: wrap; padding: 16px; }
+  .kpi-card { flex: 1; min-width: 160px; background: var(--light); border-radius: 5px; padding: 14px 16px; border-top: 3px solid var(--gold); }
+  .kpi-card .kpi-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-family: sans-serif; }
+  .kpi-card .kpi-value { font-size: 20px; font-weight: bold; margin-top: 4px; font-family: 'Courier New', monospace; }
+  .kpi-card .kpi-chg { font-size: 13px; margin-top: 2px; font-family: sans-serif; }
+  .kpi-card .kpi-chg.positive { color: var(--positive); }
+  .kpi-card .kpi-chg.negative { color: var(--negative); }
+  
+  footer { background: var(--navy); color: #4a5a6a; font-size: 11px; padding: 16px 40px; text-align: center; border-top: 1px solid var(--navy3); margin-top: 24px; }
 </style>
 </head>
 <body>
 
-<header class="no-print">
-  <div class="toolbar">
-    <div>
-      <h1>글로벌 마켓 브리프</h1>
-      <div class="sub">세션 리뷰 — 2026년 7월 7일 화요일 &nbsp;|&nbsp; 작성: 2026년 7월 8일 07:00 KST &nbsp;|&nbsp; 기관 배포용</div>
-    </div>
-    <div>
-      <button class="btn btn-outline" onclick="location.href='../index.html'">← 대시보드</button>
-      <button class="btn btn-outline" onclick="location.href='../archive.html'">아카이브</button>
-      <button class="btn btn-gold" onclick="downloadPage()">⬇ HTML로 저장</button>
-      <button class="btn btn-gold" onclick="window.print()">⬇ PDF로 저장</button>
-    </div>
-  </div>
+<header>
+  <h1>Global Markets Brief</h1>
+  <div class="subtitle">Institutional Daily Session Review — For internal distribution only</div>
+  <div class="date-badge">Session Review — 2026-07-07 (Tuesday)</div>
 </header>
 
-<main>
+<div class="container">
 
-<section>
-  <h2>요약</h2>
-  <p class="exec">
-  미국 증시는 화요일, 반도체 업종의 새로운 매도세가 비교적 조용했던 매크로 일정을 압도하며 하락했다. S&amp;P500지수는 0.45% 하락한 7,503.85, 나스닥종합지수는 1.16% 하락한 25,818.69를 기록했으며, 인텔(-9.66%), 테라다인(-9.59%), 어플라이드 머티리얼즈(-6.46%)가 가장 큰 타격을 입었다. 삼성전자의 깜짝 2분기 잠정 실적(전년 대비 19배 증가)이 안도 랠리 대신 차익실현 매물을 촉발했고, 중국 딥시크(DeepSeek)가 자체 AI 반도체를 개발 중이라는 보도까지 겹쳤다. 타격은 아시아에서 가장 컸는데, 삼성전자와 SK하이닉스의 높은 지수 비중 탓에 코스피는 당일 4.91%, 주간으로는 9.68% 급락했고, 니케이225는 2.12% 하락, 홍콩 항셍지수는 비교적 완만한 0.51% 하락에 그쳤으며, 유럽 STOXX 600은 0.65% 내렸다. 한편 WTI 원유는 호르무즈 해협 인근 LNG 운반선에 대한 발사체 공격으로 기존 미·이란 긴장 완화 합의의 지속 가능성에 대한 우려가 되살아나며 2.76% 급등한 배럴당 70.44달러를 기록했고, 금과 은은 Fed의 금리 인상 기대가 후퇴하면서 주간 상승세를 이어갔다(각각 +3.06%/+4.74%). 모든 종목이 지수 흐름과 같은 방향으로 움직인 것은 아니었다. 코그니전트(+6.21%), 옥시덴탈 페트롤리엄(+5.88%), Cboe 글로벌 마켓츠(+5.53%)는 각기 다른 촉매를 바탕으로 S&amp;P500 내 최고 상승률을 기록했으며, 자세한 내용은 아래에서 다룬다.
-  </p>
-</section>
-
-<section>
-  <h2>주요 지수 및 원자재</h2>
-
-  <h3>주요 지수 — 2026년 7월 7일 종가</h3>
-  <table>
-    <tr><th>지수</th><th>지역</th><th>종가</th><th>1일</th><th>1주</th><th>1개월</th><th>1년</th><th>연초 대비</th></tr>
-    <tr><td>S&amp;P500 지수</td><td>미국</td><td>7,503.85</td><td class="neg">-0.45%</td><td class="pos">+0.85%</td><td class="neg">-1.06%</td><td class="pos">+19.50%</td><td class="pos">+9.62%</td></tr>
-    <tr><td>나스닥종합지수</td><td>미국</td><td>25,818.69</td><td class="neg">-1.16%</td><td class="neg">-0.01%</td><td class="neg">-3.77%</td><td class="pos">+25.33%</td><td class="pos">+11.09%</td></tr>
-    <tr><td>STOXX 유럽600</td><td>유럽</td><td>646.29</td><td class="neg">-0.65%</td><td class="pos">+0.71%</td><td class="pos">+3.95%</td><td class="pos">+19.42%</td><td class="pos">+9.03%</td></tr>
-    <tr><td>니케이225</td><td>일본</td><td>68,256.96</td><td class="neg">-2.12%</td><td class="neg">-2.58%</td><td class="pos">+6.61%</td><td class="pos">+75.96%</td><td class="pos">+35.59%</td></tr>
-    <tr><td>코스피</td><td>한국</td><td>7,656.31</td><td class="neg">-4.91%</td><td class="neg">-9.68%</td><td class="pos">+2.30%</td><td class="pos">+146.32%</td><td class="pos">+81.68%</td></tr>
-    <tr><td>항셍지수</td><td>홍콩</td><td>23,496.89</td><td class="neg">-0.51%</td><td class="pos">+2.04%</td><td class="neg">-6.96%</td><td class="neg">-4.00%</td><td class="neg">-8.32%</td></tr>
-  </table>
-  <div class="chart-box"><canvas id="ytdLineChart" height="100"></canvas></div>
-  <p class="note">모든 수치는 각 지수의 일별 과거 가격 데이터를 바탕으로 직접 산출했습니다. 1일/1주/1개월/1년 수익률은 2026년 7월 7일 기준 가장 가까운 거래일을 사용했으며, 연초 대비(YTD) 수익률은 각 지수의 2025년 마지막 거래일 종가(S&amp;P500·나스닥·항셍: 2025년 12월 31일, STOXX 600·니케이225·코스피: 2025년 12월 30일)를 100으로 환산한 값입니다.</p>
-
-  <h3 style="margin-top:18px;">원자재 — 2026년 7월 7일 종가</h3>
-  <table>
-    <tr><th>원자재</th><th>종가</th><th>1일 변동</th><th>1주 변동</th></tr>
-    <tr><td>WTI원유</td><td>$70.44/bbl</td><td class="pos">+2.76%</td><td class="neg">-0.44%</td></tr>
-    <tr><td>금</td><td>$4,157.40/oz</td><td class="neg">-0.24%</td><td class="pos">+3.06%</td></tr>
-    <tr><td>은</td><td>$61.330/oz</td><td class="neg">-1.60%</td><td class="pos">+4.74%</td></tr>
-    <tr><td>구리</td><td>$6.0708/lb</td><td class="neg">-0.08%</td><td class="pos">+1.21%</td></tr>
-    <tr><td>니켈</td><td>$16,317.88/t</td><td class="neg">-0.63%</td><td class="neg">-0.40%</td></tr>
-    <tr><td>옥수수</td><td>464.25¢/bu</td><td class="pos">+1.42%</td><td class="pos">+10.07%</td></tr>
-    <tr><td>밀</td><td>618.50¢/bu</td><td class="pos">+0.73%</td><td class="pos">+6.98%</td></tr>
-    <tr><td>대두</td><td>1,197.75¢/bu</td><td class="pos">+0.46%</td><td class="pos">+7.94%</td></tr>
-  </table>
-  <p class="note">선물 최근월물 기준입니다. 원자재 가격은 investing.com, 주요 지수는 Yahoo Finance 데이터를 기준으로 합니다.</p>
-</section>
-
-<section>
-  <h2>주요 변동 요인</h2>
-
-  <div class="callout">
-    <b>1. 글로벌 반도체·AI 칩 밸류에이션 조정.</b> 삼성전자가 발표한 잠정 2분기 영업이익 약 58억 달러(전년 대비 19배, 시장 예상치 상회)에도 불구하고 오히려 '뉴스에 팔아라' 반응이 촉발됐다. 서울 증시에서 삼성전자 주가는 장중 한때 10%까지 하락했는데, 올해 150% 급등한 데 따른 차익실현 매물이 원인이었으며, 도이치뱅크는 이번 실적이 시장 예상치를 '단' 6% 상회하는 데 그쳤다고 지적했다. 중국 딥시크가 자체 AI 반도체를 개발 중이라는 보도까지 더해지며 경쟁 심화 및 수요 지속 가능성에 대한 새로운 우려가 제기됐다. 영향은 집중적이면서도 심각했다. 인텔(-9.66%)과 테라다인(-9.59%)이 S&amp;P500 하락 종목 상위를 차지했고, 어플라이드 머티리얼즈도 약 6.5% 하락했으며, 보도에 따르면 6월 25일 이후 최소 25개 반도체 관련 종목이 20% 이상 하락했다. 코스피는 삼성전자와 SK하이닉스 비중이 높아 지수 차원에서 가장 큰 타격(당일 -4.91%, 주간 -9.68%)을 입었고, 일본은 반도체 장비 관련 노출로 니케이225가 2.12% 하락했다. 이는 근본적인 붕괴라기보다 밸류에이션 점검 성격이 강하다. AI 반도체 관련 멀티플이 이미 높은 수준이라 호재에도 급락이 나타날 수 있다는 의미다.
-  </div>
-  <div class="callout">
-    <b>2. 호르무즈 해협 선박 공격, 유가에 지정학적 리스크 프리미엄 부각.</b> 카타르 국영 해운사 소유의 만재 LNG 운반선이 호르무즈 해협을 빠져나가던 중 오만 인근 해상에서 발사체 공격을 받으면서 선주들 사이에 우려가 재점화됐고, 기존 미국·이란 상호 공격 중단 합의의 지속 가능성에 대한 의문도 제기됐다. 이 소식에 WTI는 2.76% 상승한 배럴당 70.44달러를 기록했다. 다만 OPEC+의 공급 확대 기대가 계속 시장을 압박하면서 유가는 여전히 2월 말 이후 최저 수준에 머물러 있는데, 이는 개별 사건이 근본적인 수급 구조를 바꾸지 않고도 가격을 한계적으로 움직일 수 있음을 보여준다. 이러한 위험회피·지정학적 긴장 장세는 에너지 업종 주가도 끌어올렸다. 옥시덴탈 페트롤리엄(+5.88%)은 S&amp;P500 내 최고 상승 종목 중 하나였다.
-  </div>
-  <div class="callout">
-    <b>3. 부진한 6월 고용지표, Fed 금리 경로 변화 시사.</b> 6월 비농업 고용은 5만7천 명 증가에 그쳐 시장 예상치 11만5천 명을 크게 밑돌았고, 5월 수치도 12만9천 명으로 하향 조정됐다. 실업률은 4.2%로 소폭 하락했으나 이는 경제 활력이 아닌 경제활동참가율 하락에 기인한 것이었다. 발표 이후 CME 페드워치(FedWatch) 데이터에 따르면 7월 금리 인상 가능성은 29%에서 22%로 낮아졌고, 9월 동결 가능성은 35.8%에서 46.8%로 높아졌다. 근원 및 헤드라인 PCE 인플레이션이 여전히 높은 수준(최근 기준 각각 3.4%, 4.1% y/y)을 유지하고 있어, 이번 지표는 '인상하기엔 너무 약하고, 인하하기엔 너무 뜨거운' 국면을 재확인시켰다. 이는 Fed의 동결 기조와 금리에 민감한 자산의 변동성을 다음 지표 발표 때까지 이어가게 할 요인이다.
-  </div>
-  <div class="callout">
-    <b>4. 귀금속, 안전자산 수요와 금리 기대 변화로 상승.</b> 금과 은은 각각 주간 기준 +3.06%, +4.74% 상승세를 이어갔다. 호르무즈발 지정학적 리스크 프리미엄과 Fed 금리 인상 기대 후퇴가 겹친 영향으로, 실질금리 기대치 하락은 무이자 자산인 금 보유에 따른 기회비용을 낮췄다. 보도에 따르면 이는 5월 말 이후 금의 첫 주간 상승으로, 두 금속 모두 2026년 들어 2025년의 역사적 랠리(금 +66%, 은 +135%) 상승분 일부를 반납했던 흐름에서 반전한 것이다. 은은 투자 수요에 더해 산업 수요 증가의 영향도 받고 있다.
-  </div>
-</section>
-
-<section>
-  <h2>S&amp;P500: 최고·최저 상승률 종목</h2>
-  <div class="stock-grid">
-    <div class="stock-col">
-      <h3>🟢 최고 상승 종목</h3>
-      <div class="stock-card">
-        <div class="stock-row"><span class="stock-ticker">CTSH</span><span class="stock-chg pos">+6.21%</span></div>
-        <div class="stock-name">Cognizant Technology Solutions — $43.94</div>
-        <div class="stock-why">새로운 AI 플랫폼 'Neuro AI Trust' 출시 소식에 급등했으며, 최근 52주 최저가를 기록한 이후 저가 매수세가 유입됐다. 2분기 실적 발표는 7월 29일로 예정되어 있다.</div>
+  <!-- KPI Strip -->
+  <div class="card">
+    <div class="card-header">Key Levels at Close</div>
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-label">S&P 500</div>
+        <div class="kpi-value">7,503.85</div>
+        <div class="kpi-chg negative">-0.45%</div>
       </div>
-      <div class="stock-card">
-        <div class="stock-row"><span class="stock-ticker">OXY</span><span class="stock-chg pos">+5.88%</span></div>
-        <div class="stock-name">Occidental Petroleum — $51.68</div>
-        <div class="stock-why">호르무즈 해협 유조선 사건으로 에너지 업종 전반의 투자심리가 개선되면서 유가 상승 흐름을 따라갔다.</div>
+      <div class="kpi-card">
+        <div class="kpi-label">Nasdaq Comp.</div>
+        <div class="kpi-value">25,818.69</div>
+        <div class="kpi-chg negative">-1.16%</div>
       </div>
-      <div class="stock-card">
-        <div class="stock-row"><span class="stock-ticker">CBOE</span><span class="stock-chg pos">+5.53%</span></div>
-        <div class="stock-name">Cboe Global Markets — $258.64</div>
-        <div class="stock-why">반도체 업종 매도세로 투자자들이 포지션을 재조정하면서 발생한 변동성 급등 및 옵션·선물 거래량 증가의 수혜를 입었다.</div>
+      <div class="kpi-card">
+        <div class="kpi-label">Nikkei 225</div>
+        <div class="kpi-value">68,256.96</div>
+        <div class="kpi-chg negative">-2.12%</div>
       </div>
-    </div>
-    <div class="stock-col">
-      <h3>🔴 최저 상승(최대 하락) 종목</h3>
-      <div class="stock-card">
-        <div class="stock-row"><span class="stock-ticker">INTC</span><span class="stock-chg neg">-9.66%</span></div>
-        <div class="stock-name">Intel Corporation — $110.39</div>
-        <div class="stock-why">삼성전자의 2분기 차익실현 매물과 딥시크의 자체 AI 반도체 개발 소식이 촉발한 업종 전반의 반도체 매도세를 주도했으며, 이는 경쟁 심화 및 수요 지속 가능성에 대한 우려를 되살렸다.</div>
+      <div class="kpi-card">
+        <div class="kpi-label">KOSPI</div>
+        <div class="kpi-value">7,656.31</div>
+        <div class="kpi-chg negative">-4.91%</div>
       </div>
-      <div class="stock-card">
-        <div class="stock-row"><span class="stock-ticker">TER</span><span class="stock-chg neg">-9.59%</span></div>
-        <div class="stock-name">Teradyne, Inc. — $343.11</div>
-        <div class="stock-why">동일한 밸류에이션 조정 국면에 휩쓸린 반도체 테스트 장비 업체로, 보도에 따르면 6월 25일 이후 20% 이상 하락한 약 25개 반도체 관련 S&amp;P500 종목 중 하나다.</div>
+      <div class="kpi-card">
+        <div class="kpi-label">WTI Crude</div>
+        <div class="kpi-value">70.44</div>
+        <div class="kpi-chg positive">+2.76%</div>
       </div>
-      <div class="stock-card">
-        <div class="stock-row"><span class="stock-ticker">GNRC</span><span class="stock-chg neg">-8.54%</span></div>
-        <div class="stock-name">Generac Holdings — $235.80</div>
-        <div class="stock-why">AI·데이터센터 관련 랠리 이후 차익실현 매물이 나왔고, 최근 제품 리콜 이슈와 공정가치 대비 고평가 인식까지 겹쳤다.</div>
+      <div class="kpi-card">
+        <div class="kpi-label">Gold</div>
+        <div class="kpi-value">4,145.30</div>
+        <div class="kpi-chg negative">-0.24%</div>
       </div>
     </div>
   </div>
-  <p class="note">대상: 현재 S&amp;P500 구성종목 기준(위키피디아의 최신 구성종목 목록을 Yahoo Finance 데이터와 교차 검증). Yahoo Finance의 일별 종가 데이터를 기준으로 산출한 전일 대비 등락률 기준으로 순위를 매겼으며, 장중 시세는 반영하지 않았습니다.</p>
-</section>
 
-<section>
-  <h2>출처</h2>
-  <p class="src">
-  <a href="https://247wallst.com/investing/2026/07/07/intel-and-applied-materials-dive-10-amd-craters-8-as-samsung-earnings-trigger-chip-selloff/" target="_blank">24/7 Wall St. — Intel and Applied Materials Dive 10%, AMD Craters 8% as Samsung Earnings Trigger Chip Selloff</a><br>
-  <a href="https://www.investing.com/news/stock-market-news/european-chip-stocks-dip-after-samsung-selloff-on-quarterly-results-4778297" target="_blank">Investing.com — Global chip stocks in the red after Samsung dips on quarterly results</a><br>
-  <a href="https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-july-7-2026" target="_blank">TheStreet — Stock Market Today: Chip rout continues as Samsung earnings fail to turn around Nasdaq, S&amp;P 500</a><br>
-  <a href="https://finance.yahoo.com/markets/live/stock-market-today-sp-500-nasdaq-futures-slip-after-samsung-results-spark-chip-sell-off-223015294.html" target="_blank">Yahoo Finance — Stock market today: Dow, S&amp;P 500, Nasdaq fall as semiconductors sell off, oil prices jump</a><br>
-  <a href="https://fortune.com/article/price-of-oil-07-07-2026/" target="_blank">Fortune — Current price of oil as of July 7, 2026</a><br>
-  <a href="https://www.cnbc.com/2026/07/02/jobs-report-june-2026-.html" target="_blank">CNBC — Jobs report, June 2026</a><br>
-  <a href="https://www.cnbc.com/2026/07/02/us-treasury-yields-rise-as-investors-await-june-jobs-report.html" target="_blank">CNBC — 2-year Treasury yield eases as light jobs report reduces Fed hike expectations</a><br>
-  <a href="https://www.cnbc.com/2026/07/03/gold-silver-price-inflation-fed-rate-hike.html" target="_blank">CNBC — Gold prices set for first weekly rise in a month as investors scale back Fed rate hike bets</a><br>
-  <a href="https://www.gurufocus.com/news/8943985/generac-holdings-inc-gnrc-shares-fall-65-what-gf-score-of-83-tells-investors" target="_blank">GuruFocus — Generac Holdings Inc (GNRC) Shares Fall 6.5%</a><br>
-  <a href="https://www.quiverquant.com/news/Generac+shares+slide+as+investors+digest+recent+data-center+rally+and+product-recall+headlines" target="_blank">QuiverQuant — Generac shares slide as investors digest recent data-center rally and product-recall headlines</a><br>
-  <a href="https://www.tipranks.com/news/catalyst/why-cognizants-stock-is-suddenly-surging-today" target="_blank">TipRanks — Why Cognizant's Stock Is Suddenly Surging Today</a><br>
-  지수, 원자재, 개별 종목의 가격 수준은 Yahoo Finance의 일별 과거 가격 데이터(query1.finance.yahoo.com)를 기준으로 산출했으며, 원자재는 investing.com 데이터를 사용했습니다. S&amp;P500 구성종목 목록은 위키피디아의 "List of S&amp;P 500 companies" 문서를 참고했습니다.
-  </p>
-</section>
+  <!-- Executive Summary -->
+  <div class="card">
+    <div class="card-header">Executive Summary</div>
+    <div class="card-body">
+      <div class="exec-text">The S&P 500 fell 33.58 points (-0.45%) to close at 7,503.85 on July 7, 2026, surrendering Monday's AI-driven gains as semiconductor stocks reversed sharply. The Nasdaq Composite declined 1.16% to 25,818.69, and the Dow Jones Industrial Average slipped 130.76 points (-0.25%) from its prior-day record close above 53,000. The session's primary catalyst was Samsung Electronics' Tokyo-open earnings release: the company reported a 19-fold surge in Q2 operating profit to 89.4 trillion won ($58.4 billion) — a historic beat — yet shares plunged 6.9% in Seoul as the market "sold the news" on concerns over AI capex sustainability and memory oversupply. The selloff transmitted across Asian chip indices and into Wall Street, with AMD falling 6.5%, Intel -9.7%, and Micron -4.7%. Simultaneously, renewed Strait of Hormuz tanker attacks by Iran lifted WTI crude +2.76% to $70.44/bbl (Brent +2.4% to $74.16), pushing the 10-year Treasury yield up 6 bps to 4.54% and adding an inflationary overlay. Cross-asset tone was risk-off in tech, with defensive and energy sectors outperforming. The upcoming release of June FOMC minutes on July 9 is keeping rates markets on alert.</div>
+    </div>
+  </div>
 
-</main>
+  <!-- YTD Chart -->
+  <div class="card">
+    <div class="card-header">YTD Normalized Performance (Base = 100)</div>
+    <div class="card-body">
+      <div class="chart-wrap">
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="280" style="background:#1a2332;border-radius:6px;">
+<line x1="60" y1="219.1" x2="800" y2="219.1" stroke="#2d3a4a" stroke-width="1"/>
+<text x="55" y="223.1" fill="#7a8a9a" font-size="10" text-anchor="end">90</text>
+<line x1="60" y1="202.4" x2="800" y2="202.4" stroke="#2d3a4a" stroke-width="1"/>
+<text x="55" y="206.4" fill="#7a8a9a" font-size="10" text-anchor="end">95</text>
+<line x1="60" y1="185.6" x2="800" y2="185.6" stroke="#2d3a4a" stroke-width="1"/>
+<text x="55" y="189.6" fill="#7a8a9a" font-size="10" text-anchor="end">100</text>
+<line x1="60" y1="168.9" x2="800" y2="168.9" stroke="#2d3a4a" stroke-width="1"/>
+<text x="55" y="172.9" fill="#7a8a9a" font-size="10" text-anchor="end">105</text>
+<line x1="60" y1="152.2" x2="800" y2="152.2" stroke="#2d3a4a" stroke-width="1"/>
+<text x="55" y="156.2" fill="#7a8a9a" font-size="10" text-anchor="end">110</text>
+<line x1="60" y1="135.4" x2="800" y2="135.4" stroke="#2d3a4a" stroke-width="1"/>
+<text x="55" y="139.4" fill="#7a8a9a" font-size="10" text-anchor="end">115</text>
+<line x1="60" y1="118.7" x2="800" y2="118.7" stroke="#2d3a4a" stroke-width="1"/>
+<text x="55" y="122.7" fill="#7a8a9a" font-size="10" text-anchor="end">120</text>
+<line x1="60" y1="185.6" x2="800" y2="185.6" stroke="#4a5a6a" stroke-width="1.5" stroke-dasharray="4,3"/>
+<polyline points="60.0,185.0 65.9,182.9 71.7,180.8 77.6,182.0 83.5,181.9 89.4,179.7 95.2,179.2 101.1,179.9 107.0,181.7 112.9,180.8 118.7,181.0 124.6,188.0 130.5,184.2 136.3,182.3 142.2,182.2 148.1,180.5 154.0,179.1 159.8,179.1 165.7,179.6 171.6,181.1 177.5,179.2 183.3,182.1 189.2,183.8 195.1,188.0 201.0,181.4 206.8,179.8 212.7,180.9 218.6,181.0 224.4,186.3 230.3,186.1 236.2,185.7 242.1,183.9 247.9,184.8 253.8,182.5 259.7,186.0 265.6,183.5 271.4,180.7 277.3,182.5 283.2,184.0 289.0,183.9 294.9,187.1 300.8,184.5 306.7,186.4 312.5,190.8 318.4,188.1 324.3,188.8 330.2,189.1 336.0,194.1 341.9,196.1 347.8,192.8 353.7,192.0 359.5,196.5 365.4,197.3 371.3,202.2 377.1,198.6 383.0,199.8 388.9,198.0 394.8,203.7 400.6,209.0 406.5,210.2 412.4,201.1 418.3,198.9 424.1,198.5 430.0,197.1 435.9,196.8 441.7,188.7 447.6,186.6 453.5,187.1 459.4,183.6 465.2,179.7 471.1,177.0 477.0,176.1 482.9,171.9 488.7,172.8 494.6,175.0 500.5,171.3 506.3,172.8 512.2,170.0 518.1,169.6 524.0,171.3 529.8,171.4 535.7,167.9 541.6,166.8 547.5,168.3 553.3,165.4 559.2,160.2 565.1,161.6 571.0,158.6 576.8,157.9 582.7,158.5 588.6,156.3 594.4,153.6 600.3,158.1 606.2,158.4 612.1,160.8 617.9,156.9 623.8,156.3 629.7,154.9 635.6,152.7 641.4,152.6 647.3,150.5 653.2,149.7 659.0,148.7 664.9,148.3 670.8,151.0 676.7,149.5 682.5,159.3 688.4,158.2 694.3,159.2 700.2,165.0 706.0,158.8 711.9,157.0 717.8,151.0 723.7,153.1 729.5,157.5 735.4,153.6 741.3,155.0 747.1,160.2 753.0,160.6 758.9,160.6 764.8,160.8 770.6,156.5 776.5,153.7 782.4,154.4 788.3,154.4 794.1,151.8 800.0,153.4" fill="none" stroke="#C8A951" stroke-width="2" stroke-linejoin="round"/>
+<rect x="60" y="257" width="10" height="10" fill="#C8A951"/>
+<text x="74" y="267" fill="#C8A951" font-size="10">S&P 500 (+9.6%)</text>
+<polyline points="60.0,185.7 65.9,183.4 71.7,181.3 77.6,180.7 83.5,182.2 89.4,179.4 95.2,178.5 101.1,178.9 107.0,182.3 112.9,181.5 118.7,181.7 124.6,189.8 130.5,185.9 136.3,182.9 142.2,181.9 148.1,180.5 154.0,177.4 159.8,176.8 165.7,179.2 171.6,182.5 177.5,180.6 183.3,185.4 189.2,190.5 195.1,195.8 201.0,188.7 206.8,185.7 212.7,187.7 218.6,188.2 224.4,194.9 230.3,195.7 236.2,195.2 242.1,192.7 247.9,193.7 253.8,190.8 259.7,194.5 265.6,191.1 271.4,187.0 277.3,190.9 283.2,193.9 289.0,192.7 294.9,196.1 300.8,191.9 306.7,192.7 312.5,198.0 318.4,193.5 324.3,193.5 330.2,193.2 336.0,199.0 341.9,202.0 347.8,198.1 353.7,196.6 359.5,201.4 365.4,202.2 371.3,208.6 377.1,204.3 383.0,207.0 388.9,204.6 394.8,212.1 400.6,218.7 406.5,220.9 412.4,209.5 418.3,205.8 424.1,205.3 430.0,203.6 435.9,203.3 441.7,194.4 447.6,191.7 453.5,190.5 459.4,186.5 465.2,179.9 471.1,174.5 477.0,173.3 482.9,168.0 488.7,168.9 494.6,171.0 500.5,165.2 506.3,168.4 512.2,162.7 518.1,161.9 524.0,165.1 529.8,165.0 535.7,161.9 541.6,158.7 547.5,159.3 553.3,155.6 559.2,148.2 565.1,148.7 571.0,142.3 576.8,141.9 582.7,144.6 588.6,140.1 594.4,136.7 600.3,142.6 606.2,144.6 612.1,147.8 617.9,142.0 623.8,141.7 629.7,140.9 635.6,136.4 641.4,136.2 647.3,132.7 653.2,131.9 659.0,130.3 664.9,130.2 670.8,133.6 676.7,133.9 682.5,150.1 688.4,146.9 694.3,150.5 700.2,157.9 706.0,148.6 711.9,147.5 717.8,136.0 723.7,140.5 729.5,145.6 735.4,138.5 741.3,143.5 747.1,151.9 753.0,153.5 758.9,155.1 764.8,156.0 770.6,148.5 776.5,142.8 782.4,145.3 788.3,148.3 794.1,144.1 800.0,148.5" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linejoin="round"/>
+<rect x="220" y="257" width="10" height="10" fill="#3B82F6"/>
+<text x="234" y="267" fill="#3B82F6" font-size="10">Nasdaq (+11.1%)</text>
+<polyline points="60.0,180.6 65.9,178.6 71.7,178.7 77.6,179.4 83.5,176.1 89.4,175.4 95.2,175.7 101.1,175.0 107.0,173.3 112.9,173.5 118.7,177.6 124.6,180.0 130.5,180.1 136.3,176.6 142.2,176.9 148.1,176.2 154.0,174.2 159.8,176.8 165.7,177.5 171.6,175.4 177.5,171.8 183.3,171.4 189.2,171.3 195.1,175.0 201.0,171.9 206.8,169.5 212.7,169.7 218.6,169.4 224.4,171.1 230.3,171.6 236.2,171.1 242.1,169.5 247.9,165.3 253.8,167.3 259.7,164.3 265.6,165.9 271.4,165.1 277.3,162.7 283.2,162.8 289.0,162.4 294.9,168.2 300.8,179.0 306.7,174.4 312.5,178.8 318.4,182.3 324.3,184.4 330.2,178.1 336.0,180.1 341.9,182.2 347.8,183.9 353.7,182.4 359.5,180.2 365.4,182.7 371.3,190.8 377.1,196.7 383.0,194.7 388.9,193.3 394.8,188.6 400.6,192.4 406.5,195.5 412.4,192.4 418.3,191.1 424.1,182.9 430.0,183.5 435.9,186.9 441.7,173.9 447.6,174.5 453.5,173.2 459.4,173.7 465.2,170.3 471.1,171.8 477.0,172.0 482.9,166.6 488.7,169.4 494.6,172.5 500.5,173.7 506.3,173.6 512.2,175.6 518.1,176.6 524.0,177.8 529.8,179.9 535.7,175.2 541.6,178.4 547.5,176.1 553.3,168.4 559.2,172.3 565.1,174.7 571.0,174.3 576.8,177.8 582.7,175.1 588.6,177.6 594.4,175.8 600.3,175.2 606.2,170.1 612.1,169.9 617.9,167.4 623.8,165.8 629.7,165.7 635.6,167.4 641.4,166.9 647.3,169.6 653.2,167.3 659.0,169.6 664.9,167.8 670.8,168.8 676.7,169.3 682.5,171.0 688.4,171.3 694.3,169.4 700.2,162.8 706.0,162.1 711.9,161.2 717.8,159.4 723.7,160.6 729.5,161.4 735.4,159.4 741.3,162.0 747.1,161.7 753.0,158.9 758.9,161.3 764.8,161.2 770.6,158.0 776.5,159.4 782.4,154.3 788.3,151.8 794.1,153.0 800.0,155.4" fill="none" stroke="#10B981" stroke-width="2" stroke-linejoin="round"/>
+<rect x="380" y="257" width="10" height="10" fill="#10B981"/>
+<text x="394" y="267" fill="#10B981" font-size="10">STOXX 600 (+9.0%)</text>
+<polyline points="60.0,175.7 66.0,171.1 72.0,174.9 78.0,180.5 84.1,175.0 90.1,164.3 96.1,159.0 102.1,160.6 108.1,161.7 114.1,164.1 120.2,168.0 126.2,169.4 132.2,163.4 138.2,162.3 144.2,168.7 150.2,165.7 156.3,165.5 162.3,165.4 168.3,165.8 174.3,170.2 180.3,156.5 186.3,159.4 192.4,162.5 198.4,159.6 204.4,145.6 210.4,137.0 216.4,137.1 222.4,141.7 228.5,142.6 234.5,144.2 240.5,140.4 246.5,138.2 252.5,142.5 258.5,139.2 264.6,130.8 270.6,129.7 276.6,129.0 282.6,134.3 288.6,146.1 294.6,159.7 300.7,152.8 306.7,150.5 312.7,169.7 318.7,159.6 324.7,154.5 330.7,158.3 336.7,162.5 342.8,162.9 348.8,163.3 354.8,153.1 360.8,165.4 366.8,177.8 372.8,172.9 378.9,163.0 384.9,163.9 390.9,165.4 396.9,175.4 402.9,180.8 408.9,163.0 415.0,171.5 421.0,167.1 427.0,165.2 433.0,165.1 439.0,145.9 445.0,148.7 451.1,141.8 457.1,144.7 463.1,135.5 469.1,133.8 475.1,124.6 481.1,131.5 487.2,129.2 493.2,125.7 499.2,124.1 505.2,127.1 511.2,123.3 517.2,117.8 523.3,121.9 529.3,126.1 535.3,124.6 541.3,102.5 547.3,103.3 553.3,105.3 559.3,103.1 565.4,99.6 571.4,103.7 577.4,112.0 583.4,116.0 589.4,117.7 595.4,122.7 601.5,110.2 607.5,99.2 613.5,87.0 619.5,88.1 625.5,88.1 631.5,90.2 637.6,79.3 643.6,75.2 649.6,76.6 655.6,65.5 661.6,71.7 667.6,77.5 673.7,94.6 679.7,85.3 685.7,93.6 691.7,93.3 697.7,81.3 703.7,59.4 709.8,58.8 715.8,55.5 721.8,47.8 727.8,46.5 733.8,39.2 739.8,56.2 745.9,60.3 751.9,39.1 757.9,59.1 763.9,58.4 769.9,54.4 775.9,51.7 782.0,63.3 788.0,56.5 794.0,56.6 800.0,66.5" fill="none" stroke="#EF4444" stroke-width="2" stroke-linejoin="round"/>
+<rect x="540" y="257" width="10" height="10" fill="#EF4444"/>
+<text x="554" y="267" fill="#EF4444" font-size="10">Nikkei 225 (+35.6%)</text>
+<text x="60.0" y="250" fill="#7a8a9a" font-size="9" text-anchor="middle">01-02</text>
+<text x="183.3" y="250" fill="#7a8a9a" font-size="9" text-anchor="middle">02-03</text>
+<text x="306.7" y="250" fill="#7a8a9a" font-size="9" text-anchor="middle">03-05</text>
+<text x="430.0" y="250" fill="#7a8a9a" font-size="9" text-anchor="middle">04-06</text>
+<text x="553.3" y="250" fill="#7a8a9a" font-size="9" text-anchor="middle">05-05</text>
+<text x="676.7" y="250" fill="#7a8a9a" font-size="9" text-anchor="middle">06-04</text>
+<text x="800.0" y="250" fill="#7a8a9a" font-size="9" text-anchor="middle">07-07</text>
+<text x="60" y="20" fill="#C8A951" font-size="11" font-weight="bold">YTD Performance (Base = 100, Jan 2026)</text>
+</svg>
+      </div>
+    </div>
+  </div>
 
-<footer>기관 배포를 위해 작성되었습니다. 데이터는 위에 명시된 공개 뉴스 및 시장 데이터 출처를 바탕으로 작성되었으며, 투자 권유가 아닙니다.</footer>
+  <!-- Major Indices Table -->
+  <div class="card">
+    <div class="card-header">Major Indices</div>
+    <div class="card-body" style="padding:0;">
+      <table>
+        <thead><tr><th>Index</th><th>Region</th><th>Close</th><th>1D %</th><th>1W %</th><th>1M %</th><th>YTD %</th></tr></thead>
+        <tbody><tr>
+      <td>S&P 500</td>
+      <td>USA</td>
+      <td class="num">7,503.85</td>
+      <td class="num negative">-0.45%</td>
+      <td class="num positive">+0.85%</td>
+      <td class="num negative">-1.06%</td>
+      <td class="num positive">+9.62%</td>
+    </tr>
+<tr>
+      <td>Nasdaq Composite</td>
+      <td>USA</td>
+      <td class="num">25,818.69</td>
+      <td class="num negative">-1.16%</td>
+      <td class="num negative">-0.01%</td>
+      <td class="num negative">-3.77%</td>
+      <td class="num positive">+11.09%</td>
+    </tr>
+<tr>
+      <td>STOXX 600</td>
+      <td>Europe</td>
+      <td class="num">646.29</td>
+      <td class="num negative">-0.65%</td>
+      <td class="num positive">+0.71%</td>
+      <td class="num positive">+3.95%</td>
+      <td class="num positive">+9.03%</td>
+    </tr>
+<tr>
+      <td>Nikkei 225</td>
+      <td>Japan</td>
+      <td class="num">68,256.96</td>
+      <td class="num negative">-2.12%</td>
+      <td class="num negative">-2.58%</td>
+      <td class="num positive">+6.61%</td>
+      <td class="num positive">+35.59%</td>
+    </tr>
+<tr>
+      <td>KOSPI</td>
+      <td>Korea</td>
+      <td class="num">7,656.31</td>
+      <td class="num negative">-4.91%</td>
+      <td class="num negative">-9.68%</td>
+      <td class="num positive">+2.30%</td>
+      <td class="num positive">+81.68%</td>
+    </tr>
+<tr>
+      <td>Hang Seng</td>
+      <td>HK</td>
+      <td class="num">23,496.89</td>
+      <td class="num negative">-0.51%</td>
+      <td class="num positive">+2.04%</td>
+      <td class="num negative">-6.96%</td>
+      <td class="num negative">-8.32%</td>
+    </tr></tbody>
+      </table>
+    </div>
+  </div>
 
-<script>
-function downloadPage(){
-  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-  const blob = new Blob([html], {type:'text/html'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'global_markets_brief_2026-07-07.html';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-}
+  <!-- Commodities Table -->
+  <div class="card">
+    <div class="card-header">Commodities</div>
+    <div class="card-body" style="padding:0;">
+      <table>
+        <thead><tr><th>Commodity</th><th>Unit</th><th>Close</th><th>1D %</th><th>1W %</th><th>1M %</th><th>YTD %</th></tr></thead>
+        <tbody><tr>
+      <td>WTI Crude Oil</td>
+      <td>USD/bbl</td>
+      <td class="num">70.44</td>
+      <td class="num positive">+2.76%</td>
+      <td class="num negative">-0.44%</td>
+      <td class="num negative">-24.29%</td>
+      <td class="num positive">+22.68%</td>
+    </tr>
+<tr>
+      <td>Gold</td>
+      <td>USD/oz</td>
+      <td class="num">4,145.30</td>
+      <td class="num negative">-0.24%</td>
+      <td class="num positive">+3.06%</td>
+      <td class="num negative">-7.38%</td>
+      <td class="num negative">-4.17%</td>
+    </tr>
+<tr>
+      <td>Silver</td>
+      <td>USD/oz</td>
+      <td class="num">60.93</td>
+      <td class="num negative">-1.60%</td>
+      <td class="num positive">+4.74%</td>
+      <td class="num negative">-17.41%</td>
+      <td class="num negative">-13.12%</td>
+    </tr>
+<tr>
+      <td>Copper</td>
+      <td>USD/lb</td>
+      <td class="num">6.17</td>
+      <td class="num negative">-0.11%</td>
+      <td class="num positive">+1.21%</td>
+      <td class="num negative">-5.21%</td>
+      <td class="num positive">+9.62%</td>
+    </tr>
+<tr>
+      <td>Aluminium</td>
+      <td>USD/t</td>
+      <td class="num">3,503.75</td>
+      <td class="num positive">+0.73%</td>
+      <td class="num positive">+3.26%</td>
+      <td class="num negative">-12.34%</td>
+      <td class="num positive">+20.56%</td>
+    </tr>
+<tr>
+      <td>Platinum</td>
+      <td>USD/oz</td>
+      <td class="num">1,651.20</td>
+      <td class="num positive">+1.20%</td>
+      <td class="num positive">+4.87%</td>
+      <td class="num negative">-12.82%</td>
+      <td class="num negative">-18.84%</td>
+    </tr>
+<tr>
+      <td>Corn</td>
+      <td>USc/bu</td>
+      <td class="num">442.50</td>
+      <td class="num positive">+0.40%</td>
+      <td class="num positive">+10.07%</td>
+      <td class="num positive">+4.24%</td>
+      <td class="num positive">+0.51%</td>
+    </tr>
+<tr>
+      <td>Wheat</td>
+      <td>USc/bu</td>
+      <td class="num">609.25</td>
+      <td class="num positive">+0.54%</td>
+      <td class="num positive">+6.98%</td>
+      <td class="num positive">+4.73%</td>
+      <td class="num positive">+20.17%</td>
+    </tr>
+<tr>
+      <td>Soybeans</td>
+      <td>USc/bu</td>
+      <td class="num">1,196.75</td>
+      <td class="num positive">+1.23%</td>
+      <td class="num positive">+7.94%</td>
+      <td class="num positive">+5.95%</td>
+      <td class="num positive">+16.13%</td>
+    </tr></tbody>
+      </table>
+    </div>
+  </div>
 
-const ytdData = {"dates":["2026-01-02","2026-01-05","2026-01-06","2026-01-07","2026-01-08","2026-01-09","2026-01-12","2026-01-13","2026-01-14","2026-01-15","2026-01-16","2026-01-20","2026-01-21","2026-01-22","2026-01-23","2026-01-26","2026-01-27","2026-01-28","2026-01-29","2026-01-30","2026-02-02","2026-02-03","2026-02-04","2026-02-05","2026-02-06","2026-02-09","2026-02-10","2026-02-11","2026-02-12","2026-02-13","2026-02-17","2026-02-18","2026-02-19","2026-02-20","2026-02-23","2026-02-24","2026-02-25","2026-02-26","2026-02-27","2026-03-02","2026-03-03","2026-03-04","2026-03-05","2026-03-06","2026-03-09","2026-03-10","2026-03-11","2026-03-12","2026-03-13","2026-03-16","2026-03-17","2026-03-18","2026-03-19","2026-03-20","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-30","2026-03-31","2026-04-01","2026-04-02","2026-04-06","2026-04-07","2026-04-08","2026-04-09","2026-04-10","2026-04-13","2026-04-14","2026-04-15","2026-04-16","2026-04-17","2026-04-20","2026-04-21","2026-04-22","2026-04-23","2026-04-24","2026-04-27","2026-04-28","2026-04-29","2026-04-30","2026-05-01","2026-05-04","2026-05-05","2026-05-06","2026-05-07","2026-05-08","2026-05-11","2026-05-12","2026-05-13","2026-05-14","2026-05-15","2026-05-18","2026-05-19","2026-05-20","2026-05-21","2026-05-22","2026-05-26","2026-05-27","2026-05-28","2026-05-29","2026-06-01","2026-06-02","2026-06-03","2026-06-04","2026-06-05","2026-06-08","2026-06-09","2026-06-10","2026-06-11","2026-06-12","2026-06-15","2026-06-16","2026-06-17","2026-06-18","2026-06-19","2026-06-22","2026-06-23","2026-06-24","2026-06-25","2026-06-26","2026-06-29","2026-06-30","2026-07-01","2026-07-02","2026-07-03","2026-07-06","2026-07-07"],"series":{"S&P500 지수":[100.3833,100.9481,101.0032,100.9993,101.4787,101.6403,101.4585,100.9349,101.1730,101.1092,101.1092,99.0754,100.2011,100.7448,100.7771,101.2673,101.6752,101.6675,101.5387,101.1085,101.1085,101.6440,100.8093,100.3049,99.1005,101.0303,101.0303,101.4700,101.1428,101.1379,99.5714,99.6206,99.6206,99.6206,99.7228,100.2686,99.9880,100.6738,99.6449,100.4034,101.2076,100.6832,100.2537,100.2537,100.2911,99.3603,100.1252,99.5648,98.2665,98.2665,99.0621,98.8536,98.7715,97.2887,96.7078,96.7078,97.6748,97.9153,96.6015,96.3399,94.9004,94.9004,95.9711,95.6156,96.1252,94.4756,92.9159,92.9159,92.5528,95.2183,95.8940,96.0002,96.0002,96.0002,96.4237,96.4956,98.8940,99.5006,99.3874,99.3874,100.3928,101.5610,102.3646,102.6295,103.8564,103.8564,103.6115,102.9576,104.0247,103.5981,104.4172,104.4172,104.5453,104.0378,103.9962,105.0524,105.3593,104.9349,105.7799,107.3122,106.9074,107.8032,107.8032,108.0044,107.8318,108.4570,109.2801,107.9403,107.9403,107.8622,107.1481,108.2949,108.4794,108.8801,108.8801,108.8801,109.5411,109.5588,110.1874,110.4245,110.4245,110.7115,110.8548,110.0405,110.4841,107.5779,107.5779,107.8965,107.6203,105.8892,107.7295,108.2680,108.2680,110.0400,109.4185,108.0961,109.2652,109.2652,109.2652,108.8628,107.3050,107.1993,107.1889,107.1394,107.1394,108.3893,109.5517,109.3160,109.3162,110.1078,109.6173],"나스닥종합지수":[100.2934,100.9807,101.6293,101.7885,101.3405,102.1608,102.4290,102.3260,101.3040,101.5528,101.5528,99.1425,100.3021,101.2077,101.4869,101.9165,102.8412,103.0143,102.2757,101.3161,101.3161,101.8746,100.4283,98.9227,97.3597,99.4630,99.4630,100.3542,99.7691,99.6142,97.5975,97.3795,97.3795,97.3795,97.5163,98.2683,97.9634,98.8365,97.7237,98.7396,99.9773,98.8017,97.8991,97.8991,98.2454,97.2482,98.4972,98.2468,96.6947,96.6947,98.0181,98.0231,98.1039,96.3690,95.4818,95.4818,96.6360,97.0876,95.6836,95.4179,93.5150,93.5150,94.8003,94.0072,94.7263,92.4842,90.5106,90.5106,89.8501,93.2694,94.3438,94.5077,94.5077,94.5077,95.0117,95.1035,97.7549,98.5605,98.9061,98.9061,100.1102,102.0669,103.6852,104.0576,105.6291,105.6291,105.3540,104.7346,106.4436,105.5023,107.2130,107.2130,107.4297,106.4696,106.5106,107.4523,108.4064,108.2064,109.3161,111.5195,111.3789,113.2732,113.2732,113.3891,112.5905,113.9401,114.9411,113.1770,113.1770,112.5989,111.6522,113.3722,113.4700,113.6879,113.6879,113.6879,115.0300,115.1097,116.1520,116.3891,116.3891,116.8804,116.9099,115.8783,115.7797,110.9552,110.9552,111.9006,110.8226,108.6317,111.3853,111.7250,111.7250,115.1445,113.8213,112.2955,114.4302,114.4302,114.4302,112.9159,110.4235,109.9490,109.4409,109.1780,109.1780,111.4287,112.4570,111.9412,111.6577,112.9017,112.4022],"STOXX 유럽600":[100.9427,101.5480,101.4980,101.3141,102.3082,102.5322,102.4442,102.6337,103.1479,103.1156,101.8797,101.1428,101.1210,102.1596,102.0714,102.2779,102.8712,102.0997,101.8695,102.5164,102.5164,103.5732,103.6053,102.5245,103.4392,104.1600,104.1600,104.8776,104.8038,104.9058,104.4001,104.2668,104.2668,104.4033,105.6461,105.0842,105.9583,105.4773,105.7186,106.4402,106.3915,106.5024,106.5024,105.2098,101.9846,101.4980,102.4839,103.9186,103.9186,103.3005,102.3663,102.1330,101.5148,100.5183,98.1188,96.3808,96.3808,96.9640,97.3730,98.7290,97.6120,97.1230,98.5583,97.4409,97.4406,97.9701,99.7803,99.6015,99.6034,99.6034,99.6034,98.5896,102.4038,102.2530,102.6234,102.6234,102.4632,103.4779,103.0339,102.9800,104.5762,104.5762,103.7239,102.8188,102.4636,102.5164,101.9269,101.9269,101.6230,101.2451,100.6403,102.0202,102.0202,101.0568,101.7550,104.0089,102.8698,102.1600,102.1600,102.2688,101.2452,102.0466,102.8127,101.2864,101.2864,101.8253,102.0203,103.5063,103.5507,104.3080,104.3080,105.3866,104.7898,104.8189,104.3105,104.4585,104.4585,103.6698,104.3550,103.6636,104.2016,103.9027,103.9027,103.7480,103.2325,103.1544,103.7132,105.6503,105.6503,105.8558,106.1163,106.6664,106.3063,106.0500,106.0500,106.6577,105.8873,105.9757,106.8113,106.0929,106.0929,106.1315,107.0009,105.6437,106.2988,109.0069,108.4989],"니케이225":[100.0000,101.7815,102.1735,103.6198,103.9241,103.5726,102.2013,103.7746,103.3441,102.9973,101.7414,100.5601,99.9700,101.6864,102.0080,100.0876,101.1943,105.1791,102.7998,105.1859,105.5940,105.1364,103.8236,101.7746,105.5476,111.9868,109.6001,112.0546,112.5251,112.0026,110.6620,111.8060,110.4326,109.9646,111.1051,111.6796,110.4432,110.2094,111.2960,111.6252,110.4155,109.9917,111.4180,113.8657,114.1957,114.3861,111.7676,112.8195,109.3395,105.4247,107.4297,108.1046,101.4200,102.4506,105.3623,106.8508,105.7434,104.5259,104.2952,104.3969,104.2957,107.2696,103.6857,103.6857,99.4395,100.0713,101.4831,104.3672,104.0819,103.6360,98.7495,100.8032,99.2100,104.4082,101.9527,103.2451,103.3625,103.7861,103.8167,109.4111,108.6106,110.5949,109.4791,109.7844,112.4266,112.9247,115.6157,113.6156,114.5075,114.2814,115.3040,115.7645,114.8994,116.0233,116.7681,117.6389,116.4415,114.9683,115.2152,115.6620,115.6620,115.6620,120.2141,122.1147,121.8792,123.2969,121.3040,121.9302,122.9556,121.7548,119.3406,119.9295,118.1970,117.6714,116.2213,119.8433,123.0611,124.3237,126.5763,126.2569,126.2624,125.6693,128.8207,128.7822,129.9985,129.6122,132.8388,131.0399,129.3403,123.9101,124.3620,127.0562,124.6752,124.7484,128.2296,132.9500,134.5931,134.7614,135.7297,137.9698,138.3510,138.3499,140.5017,135.4838,134.3097,140.5352,134.6893,135.2306,136.9349],"코스피":[100.6046,102.7280,102.9033,102.9337,103.6749,104.4433,105.3125,106.8347,107.5271,109.0698,110.0524,111.5195,111.0672,111.6187,112.5872,113.4423,113.4423,109.1667,113.8951,116.7476,118.6027,119.6470,119.6470,113.3184,120.9749,122.8256,118.1466,116.4470,116.4470,121.2867,121.3697,122.5764,126.3197,125.9691,125.9691,125.9691,125.9691,129.9038,132.9096,133.7515,136.5065,139.2199,144.3437,142.9017,142.9017,142.9017,132.6017,116.6099,127.8280,127.8502,127.8502,120.2555,126.7256,128.4977,127.8879,125.6863,125.6863,127.1197,129.1953,135.6926,132.0233,132.4356,132.4356,123.8236,127.2224,129.2445,125.0929,124.6082,124.6082,120.8621,115.7115,125.5051,119.9019,123.2857,123.2857,124.9584,125.9762,134.5407,132.3618,134.2135,134.2135,133.0632,136.7135,139.5162,142.6136,141.8300,141.8300,142.4531,146.3559,147.0311,148.3731,148.3679,148.3679,151.5252,152.1214,153.2648,151.1544,151.1544,158.9174,158.9174,169.2129,171.6288,171.8112,171.8112,179.2321,175.1088,179.7264,182.8767,171.6396,171.6396,172.1637,166.6231,165.2088,179.0972,179.8332,179.8332,179.8332,184.4162,188.5461,187.5471,194.1596,194.1596,201.2765,201.5768,201.5768,197.8977,186.9648,186.9648,171.4980,185.4791,177.0879,177.8467,186.0864,186.0864,195.7245,199.8654,203.0292,207.6403,207.3888,207.3888,208.7113,187.9086,194.0311,204.5245,192.6768,192.6768,192.3082],"항셍지수":[100.3175,101.6362,102.9629,103.1349,102.1985,103.9975,105.5217,105.9772,105.4956,104.9973,103.8319,102.6942,103.0691,103.2431,103.6934,103.8517,103.9139,105.2942,107.9836,108.5237,106.2870,106.2870,103.9200,104.1494,104.1975,104.3441,102.9899,102.9899,105.5107,106.1229,106.4457,105.5231,103.6799,103.6799,104.2251,104.2251,104.2251,104.2251,102.9993,105.6376,103.7050,104.3924,102.8798,103.8598,103.8598,101.6091,100.4640,98.4241,98.7062,100.4127,100.4127,99.0459,101.2130,100.9723,100.2593,99.2760,99.2760,100.7247,100.8607,101.4756,99.4172,98.5432,98.5432,95.0357,97.7020,98.7674,96.8886,97.2620,97.2620,96.4747,96.6200,98.6032,97.9083,97.9083,97.9083,97.9083,97.9083,101.0121,100.4623,101.0143,101.0143,100.1052,100.9317,101.2244,102.9720,102.0570,102.0570,102.8419,103.3357,102.0687,101.1010,101.3464,101.3464,101.1409,100.1808,101.8698,100.5581,100.5581,101.8078,101.0362,102.2687,103.8814,102.9722,102.9722,103.0234,102.7924,102.9508,102.9526,101.2887,101.2887,100.1650,100.6448,100.0708,99.0357,99.8960,99.8960,99.8960,99.8724,98.8117,97.5518,98.2400,98.2400,99.0846,101.5885,100.0021,98.5187,97.3805,97.3805,96.1892,95.8324,95.2138,94.5924,96.4293,96.4293,96.9166,95.5527,94.8425,93.3288,93.3288,93.3288,92.7188,91.0300,91.3271,90.0179,88.4353,88.4353,89.8195,91.6754]}};
+  <!-- Sector Performance -->
+  <div class="card">
+    <div class="card-header">Sector &amp; Industry Overview</div>
+    <div class="card-body">
+      <table style="margin-bottom:20px;">
+        <thead><tr><th>Sector</th><th>1D %</th><th>Commentary</th></tr></thead>
+        <tbody><tr>
+      <td>Technology</td>
+      <td class="num negative">-2.8%</td>
+      <td>AI chip selloff post-Samsung earnings; AMD -6.5%, Intel -9.7%, Micron -4.7%; SpaceX first Nasdaq-100 day -6.8%.</td>
+    </tr>
+<tr>
+      <td>Communication Services</td>
+      <td class="num negative">-0.6%</td>
+      <td>Big Tech mixed-to-lower; DeepSeek AI chip development headline added competitive disruption risk.</td>
+    </tr>
+<tr>
+      <td>Energy</td>
+      <td class="num positive">+3.0%</td>
+      <td>Session's top sector; WTI +2.76% on renewed Iran tanker attacks in Strait of Hormuz and U.S. license revocation.</td>
+    </tr>
+<tr>
+      <td>Financial Services</td>
+      <td class="num positive">+0.4%</td>
+      <td>XLF hit all-time intraday high; BAC, USB, BNY at 52-week highs; RSI at 77 signals overbought conditions.</td>
+    </tr>
+<tr>
+      <td>Health Care</td>
+      <td class="num positive">+1.6%</td>
+      <td>Vertex-Crinetics $10B deal drove CRNX +99%; JPMorgan raised LLY target to $1,400 on Zepbound growth.</td>
+    </tr>
+<tr>
+      <td>Consumer Cyclical</td>
+      <td class="num negative">-0.8%</td>
+      <td>Rivian -18.1% after surprise 75M-share equity offering; broader discretionary soft on risk-off tone.</td>
+    </tr>
+<tr>
+      <td>Industrials</td>
+      <td class="num negative">-0.5%</td>
+      <td>Saab +5.2% on NATO GlobalEye aircraft deal bright spot; rest of sector dragged by AI capex concerns.</td>
+    </tr>
+<tr>
+      <td>Consumer Defensive</td>
+      <td class="num positive">+1.0%</td>
+      <td>Defensive rotation into staples; Walmart modestly lower despite Trump price-cut claims.</td>
+    </tr>
+<tr>
+      <td>Utilities</td>
+      <td class="num positive">+0.9%</td>
+      <td>Safe-haven flows on risk-off backdrop; defensive positioning ahead of FOMC minutes July 9.</td>
+    </tr>
+<tr>
+      <td>Real Estate</td>
+      <td class="num positive">+1.5%</td>
+      <td>Yield-proxy rotation into REITs despite 10-yr yield rising to 4.54%.</td>
+    </tr>
+<tr>
+      <td>Basic Materials</td>
+      <td class="num negative">-2.3%</td>
+      <td>Global chip selloff and China-linked commodity demand concerns weighed; STOXX 600 Basic Resources -2.28%.</td>
+    </tr>
+</tbody>
+      </table>
+    </div>
+  </div>
 
-const ytdColors = {
-  "S&P500 지수": "#2a78d6", "나스닥종합지수": "#1baf7a", "STOXX 유럽600": "#eda100",
-  "니케이225": "#008300", "코스피": "#4a3aa7", "항셍지수": "#e34948"
-};
+  <!-- Macroeconomic Events -->
+  <div class="card">
+    <div class="card-header">Macroeconomic Events</div>
+    <div class="card-body">
+      <table style="margin-bottom:20px;">
+        <thead><tr><th>Indicator</th><th>Period</th><th>Actual</th><th>Estimate</th><th>Prior</th><th>Source</th></tr></thead>
+        <tbody><tr>
+      <td>Nonfarm Payrolls (June 2026)</td>
+      <td>June 2026</td>
+      <td>+57,000</td>
+      <td>+110,000</td>
+      <td>+129,000 (revised from +172,000)</td>
+      <td><a href="https://www.bls.gov/news.release/empsit.nr0.htm" target="_blank">U.S. Bureau of Labor Statistics</a></td>
+    </tr>
+<tr>
+      <td>Unemployment Rate (June 2026)</td>
+      <td>June 2026</td>
+      <td>4.2%</td>
+      <td>4.2%</td>
+      <td>4.2%</td>
+      <td><a href="https://www.bls.gov/news.release/empsit.nr0.htm" target="_blank">U.S. Bureau of Labor Statistics</a></td>
+    </tr>
+<tr>
+      <td>Average Hourly Earnings MoM (June 2026)</td>
+      <td>June 2026</td>
+      <td>+0.3%</td>
+      <td>+0.3%</td>
+      <td>+0.2%</td>
+      <td><a href="https://www.bls.gov/news.release/empsit.nr0.htm" target="_blank">U.S. Bureau of Labor Statistics</a></td>
+    </tr>
+<tr>
+      <td>U.S. Trade Balance (May 2026)</td>
+      <td>May 2026</td>
+      <td>-$77.6B</td>
+      <td>-$78.1B</td>
+      <td>-$54.6B (revised)</td>
+      <td><a href="https://www.cnbc.com/2026/07/06/stock-market-today-live-updates.html" target="_blank">U.S. Commerce Department</a></td>
+    </tr>
+<tr>
+      <td>FOMC Federal Funds Rate (June 2026)</td>
+      <td>June 16-17, 2026</td>
+      <td>3.50%–3.75% (held)</td>
+      <td>3.50%–3.75% (hold expected)</td>
+      <td>3.50%–3.75%</td>
+      <td><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm" target="_blank">Federal Reserve</a></td>
+    </tr>
+<tr>
+      <td>10-Year Treasury Yield</td>
+      <td>July 7, 2026</td>
+      <td>4.54%</td>
+      <td>N/A</td>
+      <td>4.48% (July 6)</td>
+      <td><a href="https://www.cnbc.com/2026/07/06/stock-market-today-live-updates.html" target="_blank">CNBC</a></td>
+    </tr>
+<tr>
+      <td>WTI Crude Oil</td>
+      <td>July 7, 2026</td>
+      <td>$70.44/bbl</td>
+      <td>N/A</td>
+      <td>$68.54/bbl (est. prev close)</td>
+      <td><a href="https://www.cnbc.com/2026/07/06/stock-market-today-live-updates.html" target="_blank">CNBC / AP</a></td>
+    </tr>
+</tbody>
+      </table>
+      <div class="macro-narrative"><p>June 2026 Employment Situation (released July 2, 2026 — BLS USDL-26-1125): The most significant macro release in the window was the weaker-than-expected June jobs report, which continues to weigh on sentiment. Total nonfarm payrolls increased by only +57,000, sharply below the consensus estimate of +110,000 (FactSet median: +100,000) and the prior month's upwardly-revised figure of +129,000 (originally reported as +172,000). The unemployment rate held at 4.2%, unchanged from May, while the labor force participation rate declined 0.3 percentage point to 61.5%. Average hourly earnings rose 0.3% month-over-month (+3.5% year-over-year). Prior months were revised down: April revised -31,000 to +148,000; May revised -43,000 to +129,000 — a combined downward revision of -74,000. Leisure and hospitality lost 61,000 jobs. The weak print reset expectations for near-term Fed rate action, with market pricing now overwhelmingly deferring any cut to late 2026 or 2027.</p><p></p><p>U.S. Trade Deficit — May 2026 (released July 7, 2026 — Commerce Department): The U.S. trade shortfall accelerated sharply in May to -$77.6 billion, up from a revised -$54.6 billion in April, as exports fell 3.2% and imports rose 3.3%. The print was slightly below economists' consensus of -$78.1 billion (Dow Jones survey). The widening reflects post-tariff-truce import surge patterns and wartime-disrupted LNG exports. Treasury yields ticked higher intraday on the release.</p><p></p><p>FOMC Policy — June 16-17, 2026 Meeting (rate decision June 17, 2026; minutes due July 9, 2026): The Federal Reserve, in its first meeting under Chairman Kevin Warsh, voted unanimously to hold the federal funds rate in the range of 3.50%–3.75%. The FOMC dot plot signaled that a rate hike was the modal next move, with the statement pivoting toward inflation vigilance. NPR reported that the Fed signaled its next move "could be a rate increase," a hawkish departure from the prior Chair's guidance. The 10-year Treasury yield rose to 4.54% on July 7, up from 3.97% before the U.S.–Iran conflict began in March. FOMC minutes for the June meeting are scheduled for release on July 9, 2026 (3:00 PM ET), and are the key macro event in the immediate forward calendar.</p><p></p><p>No major CPI, PCE, PPI, or GDP releases occurred on July 7, 2026. The next CPI report covers July 2026 and is scheduled for August 12, 2026. The next Employment Situation release covers July 2026 and is scheduled for August 7, 2026.</p></div>
+    </div>
+  </div>
 
-new Chart(document.getElementById('ytdLineChart'), {
-  type: 'line',
-  data: {
-    labels: ytdData.dates,
-    datasets: Object.keys(ytdData.series).map(name => ({
-      label: name, data: ytdData.series[name],
-      borderColor: ytdColors[name], backgroundColor: ytdColors[name],
-      borderWidth: 1.75, pointRadius: 0, spanGaps: true, tension: 0.1
-    }))
-  },
-  options: {
-    interaction: { mode: 'index', intersect: false },
-    plugins: {
-      legend: { position: 'bottom' },
-      title: { display: true, text: '2026년 연초 대비 수익률 — 2026년 1월 1일 = 100 기준' }
-    },
-    scales: {
-      x: { ticks: { maxTicksLimit: 10 } },
-      y: { title: { display: true, text: '지수 수준 (2026년 1월 1일 = 100)' } }
-    }
-  }
-});
-</script>
+  <!-- Attention Items -->
+  <div class="card">
+    <div class="card-header">Cross-Cutting Issues &amp; Watch Items</div>
+    <div class="card-body">
+<div class="attn-item"><p>1. AI Capex Sustainability and Semiconductor Valuation Risk: Samsung's 19-fold Q2 operating profit surge (89.4 trillion won / $58.4 billion) paradoxically triggered a 6.9% share decline, with peers AMD (-6.5%), Intel (-9.7%), Micron (-4.7%), and SK Hynix (-10%) all caught in the selloff. Analyst commentary (Zavier Wong, eToro; Tom Kang, Counterpoint Research via CNBC) cited the "sell the news" dynamic, memory oversupply concerns, and AI infrastructure capex normalisation fears. Separately, DeepSeek was reported developing its own inference chip, which could reduce dependence on U.S. chipmakers and compress the addressable market. Institutional investors should monitor Q2 earnings season (Samsung full report July 30) and any guidance revisions to memory price forecasts. Source: CNBC, July 7, 2026 (https://www.cnbc.com/2026/07/06/stock-market-today-live-updates.html); Nikkei Asia (https://asia.nikkei.com/business/tech/semiconductors/samsung-profit-soars-19-times-but-shares-slump-6.9-on-oversupply-worries).</p></div>
+<div class="attn-item"><p>2. Strait of Hormuz / U.S.–Iran Conflict and Energy Supply Risk: Iran resumed attacks on tankers in the Strait of Hormuz, with the UK Maritime Trade Operations (UKMTO) reporting an "unknown projectile" striking an oil tanker off the coast of Oman on July 7. The U.S. Joint Maritime Information Center raised the threat level to "severe." The U.S. also revoked the Iranian oil sale authorization issued under the June 17 interim deal. WTI crude settled at $70.44/bbl (+2.76%); Brent crude at $74.16 (+3.0%). The 10-year Treasury yield rose to 4.54% from 3.97% since the March outbreak of the conflict. Shell noted Q2 integrated gas production is tracking well below Q1 due to conflict disruption on Qatari volumes. Persistently elevated oil prices risk reigniting inflation and pressuring the Fed toward a hike. Investors should monitor the U.S.–Iran ceasefire negotiations and Hormuz transit security. Source: CNBC, July 7, 2026; AP (https://www.republicanherald.com/2026/07/07/wall-street-stocks/).</p></div>
+<div class="attn-item"><p>3. Federal Reserve Policy Path Under Warsh: FOMC minutes from the June 16-17 meeting (Kevin Warsh's first as Chair) are due July 9, 2026. The statement explicitly flagged a possible rate hike as the next move, and the dot plot showed a majority of officials now see at least one hike in 2026. The 10-year yield at 4.54% has already materially re-rated on these expectations. The combination of weak payrolls (-57,000 vs. +110,000 consensus), widening trade deficit, and elevated oil prices creates a stagflationary backdrop. If the minutes confirm a hawkish lean, equity multiples — particularly in interest-rate-sensitive sectors like Real Estate and Utilities — face headwinds. Source: Federal Reserve (https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm); NPR (https://www.npr.org/2026/06/17/nx-s1-5860084/fed-chief-warsh-first-fomc-meeting).</p></div>
+<div class="attn-item"><p>4. Nasdaq-100 Rebalancing Effect — SpaceX (SPCX): SpaceX entered the Nasdaq-100 index on July 7, 2026, triggering passive-fund rebalancing flows. Despite the technical buying, SPCX fell 6.8% in its first full index day amid the broader tech selloff. The inclusion aligns xAI (owned by SpaceX) with index ETF holders, increasing Elon Musk–related concentration risk in the benchmark. The stock had previously surged since its June 12, 2026 Nasdaq IPO. Index-fund managers should review concentration levels; sector overweights in technology may be amplified. Source: CNBC (https://www.cnbc.com/2026/07/06/stock-market-today-live-updates.html); AP (https://apnews.com/article/spacex-elon-musk-index-funds-3c26c10b7ca0e838cceb7324f676ef2d).</p></div>
+
+    </div>
+  </div>
+
+  <!-- Sources -->
+  <div class="card">
+    <div class="card-header">Sources</div>
+    <div class="card-body">
+      <ul class="sources-list">
+<li>[1] <a href="https://www.republicanherald.com/2026/07/07/wall-street-stocks/" target="_blank">AP Business: Wall Street stocks July 7, 2026</a></li>
+<li>[2] <a href="https://www.cnbc.com/2026/07/06/stock-market-today-live-updates.html" target="_blank">CNBC: Stock market live updates July 7, 2026</a></li>
+<li>[3] <a href="https://www.bls.gov/news.release/empsit.nr0.htm" target="_blank">BLS: Employment Situation — June 2026</a></li>
+<li>[4] <a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm" target="_blank">Federal Reserve: FOMC Statement June 17, 2026</a></li>
+<li>[5] <a href="https://www.npr.org/2026/06/17/nx-s1-5860084/fed-chief-warsh-first-fomc-meeting" target="_blank">NPR: Fed holds rates — Warsh first FOMC</a></li>
+<li>[6] <a href="https://asia.nikkei.com/business/tech/semiconductors/samsung-profit-soars-19-times-but-shares-slump-6.9-on-oversupply-worries" target="_blank">Nikkei Asia: Samsung profit soars 19x, shares slump</a></li>
+<li>[7] <a href="https://www.cnbc.com/2026/07/07/samsung-electronics-preliminary-second-quarter-profit-hits-fresh-high.html" target="_blank">CNBC: Samsung Electronics Q2 results</a></li>
+<li>[8] <a href="https://finance.yahoo.com/markets/stocks/live/stock-market-today-monday-july-7-225645420.html" target="_blank">Yahoo Finance: Stock market today July 7 2026</a></li>
+<li>[9] <a href="https://www.fxstreet.com/news/nonfarm-payrolls-set-to-grow-by-over-100k-in-june-reinforcing-bets-of-upcoming-fed-rate-hikes-202607020500" target="_blank">FX Street: Nonfarm Payrolls June 2026 miss consensus</a></li>
+<li>[10] <a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm" target="_blank">Federal Reserve: FOMC Meeting Calendar</a></li>
+<li>[11] <a href="https://apnews.com/article/spacex-elon-musk-index-funds-3c26c10b7ca0e838cceb7324f676ef2d" target="_blank">AP: SpaceX joins Nasdaq-100</a></li>
+
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Generated by Daily Markets Brief Workflow &bull; Report Date: 2026-07-07 &bull; Data: Yahoo Finance / BLS / Federal Reserve / CNBC / AP &bull; For institutional use only. Past performance is not indicative of future results.
+</footer>
 
 </body>
 </html>

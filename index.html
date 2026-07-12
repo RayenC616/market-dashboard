@@ -99,7 +99,6 @@
     </div>
     <div style="display:flex;align-items:center;gap:16px;">
       <div class="user-badge" id="userBadge"></div>
-      <button class="btn btn-outline" id="dailyBriefBtn" style="display:none;" onclick="handleCreateDailyBrief()">📝 오늘의 브리프 생성</button>
       <button class="btn btn-outline" id="refreshBtn" onclick="handleRefresh()">⟳ 데이터 새로고침</button>
       <button class="btn btn-gold" onclick="location.href='brief.html'">마켓 브리프 →</button>
     </div>
@@ -439,16 +438,8 @@ async function handleRefresh() {
 function renderUserBadge(user) {
   const el = document.getElementById("userBadge");
   el.innerHTML = `<span class="name">${user.username}</span><button class="logout-link" onclick="logout()">로그아웃</button>`;
-  if (user.role === "admin") document.getElementById("dailyBriefBtn").style.display = "";
 }
 
-const DAILY_BRIEF_ACTIONS_URL = "https://github.com/RayenC616/market-dashboard/actions/workflows/daily-brief.yml";
-
-function handleCreateDailyBrief() {
-  const status = document.getElementById("statusBar");
-  window.open(DAILY_BRIEF_ACTIONS_URL, "_blank", "noopener");
-  status.innerHTML = '<span>GitHub Actions 페이지를 새 탭에서 열었습니다. 오른쪽의 "Run workflow" 버튼을 눌러 실행하세요 (GitHub 로그인 및 저장소 권한 필요). 완료되면 몇 분 내로 브리프 페이지에 반영됩니다.</span>';
-}
 
 async function init(user) {
   renderUserBadge(user);
