@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Global Markets Brief — Session Review 2026-07-14</title>
+<style>
+  :root {
+    --navy: #0d1129;
+    --navy2: #161a38;
+    --card: #1c2040;
+    --gold: #c9a84c;
+    --gold2: #e0c87a;
+    --text: #e8e8ee;
+    --muted: #8a8fa8;
+    --pos: #22c55e;
+    --neg: #ef4444;
+    --neutral: #e8e8ee;
+    --border: #2a2e52;
+    --header-border: #c9a84c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--navy); color: var(--text); font-family: 'Georgia', serif; font-size: 14px; line-height: 1.6; }
+  .page-wrap { max-width: 960px; margin: 0 auto; padding: 32px 20px 60px; }
+
+  /* Header */
+  .report-header { border-left: 5px solid var(--gold); padding: 16px 20px 12px; margin-bottom: 28px; background: var(--navy2); border-radius: 4px; }
+  .report-header h1 { font-size: 22px; color: var(--gold2); letter-spacing: 0.03em; }
+  .report-header .subtitle { color: var(--muted); font-size: 12px; margin-top: 4px; font-style: italic; }
+  .report-header .dateline { color: var(--gold); font-size: 13px; margin-top: 6px; font-weight: bold; }
+
+  /* Section */
+  .section { background: var(--card); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 22px; overflow: hidden; }
+  .section-header { background: var(--navy2); border-bottom: 1px solid var(--border); padding: 10px 18px; display: flex; align-items: center; gap: 10px; }
+  .section-header h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); font-family: 'Helvetica Neue', Arial, sans-serif; }
+  .section-body { padding: 16px 18px; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; font-family: 'Helvetica Neue', Arial, sans-serif; }
+  th { background: #1a1e3c; color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+  td { padding: 8px 10px; border-bottom: 1px solid #1e223a; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(201,168,76,0.04); }
+  .pos { color: var(--pos); font-weight: bold; }
+  .neg { color: var(--neg); font-weight: bold; }
+  .neutral { color: var(--text); }
+
+  /* Summary text */
+  .exec-text p { margin-bottom: 10px; font-size: 14px; line-height: 1.75; }
+  .exec-text ul { margin: 8px 0 8px 20px; }
+  .exec-text li { margin-bottom: 6px; }
+
+  /* Sector table */
+  .sector-commentary { font-size: 12px; color: var(--muted); max-width: 540px; }
+
+  /* Attention items */
+  .attention-item { background: var(--navy2); border-left: 3px solid var(--gold); border-radius: 4px; padding: 14px 16px; margin-bottom: 14px; }
+  .attention-item h4 { color: var(--gold2); font-size: 13px; margin-bottom: 8px; font-family: 'Helvetica Neue', Arial, sans-serif; }
+  .attention-item p { font-size: 13px; color: var(--text); line-height: 1.7; }
+
+  /* Chart container */
+  .chart-wrap { padding: 12px; }
+
+  /* Macro table */
+  .macro-sup { font-size: 12px; color: var(--muted); margin-bottom: 14px; line-height: 1.7; }
+  .macro-sup strong { color: var(--text); }
+
+  /* Sources */
+  .sources-list { font-size: 12px; color: var(--muted); line-height: 2; }
+  .sources-list li { margin-left: 16px; }
+
+  /* Footer */
+  .footer { text-align: center; color: var(--muted); font-size: 11px; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); }
+
+  /* KPI row */
+  .kpi-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 22px; }
+  .kpi-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 12px 16px; min-width: 140px; flex: 1; }
+  .kpi-card .kpi-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-family: 'Helvetica Neue', Arial, sans-serif; margin-bottom: 4px; }
+  .kpi-card .kpi-val { font-size: 18px; font-weight: bold; }
+  .kpi-card .kpi-chg { font-size: 12px; margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- Header -->
+  <div class="report-header">
+    <div class="subtitle">INSTITUTIONAL MARKETS BRIEF — AUTOMATED WORKFLOW</div>
+    <h1>Global Markets Brief</h1>
+    <div class="dateline">Session Review — Tuesday, July 14, 2026</div>
+  </div>
+
+  <!-- KPI Row -->
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-label">S&amp;P 500</div>
+      <div class="kpi-val">7,543.59</div>
+      <div class="kpi-chg pos">+0.38%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Nasdaq</div>
+      <div class="kpi-val">26,107</div>
+      <div class="kpi-chg pos">+0.90%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">WTI Crude</div>
+      <div class="kpi-val">$79.34</div>
+      <div class="kpi-chg pos">+1.54%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Gold</div>
+      <div class="kpi-val">$4,061</div>
+      <div class="kpi-chg pos">+1.60%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">CPI YoY (Jun)</div>
+      <div class="kpi-val" style="color:var(--pos)">3.5%</div>
+      <div class="kpi-chg" style="color:var(--muted)">vs 3.8% est.</div>
+    </div>
+  </div>
+
+  <!-- Executive Summary -->
+  <div class="section">
+    <div class="section-header"><h2>Executive Summary</h2></div>
+    <div class="section-body exec-text">
+      <p>U.S. equities advanced on Tuesday, July 14, 2026, led by the Nasdaq Composite (+0.90% to 26,107.01) and the S&P 500 (+0.38% to 7,543.59), while the Dow Jones Industrial Average closed effectively flat (+0.02%, +9.63 pts at 52,508.27), dragged by IBM's historic -25% plunge. The primary catalyst was a materially cooler June CPI print — headline inflation fell -0.4% MoM to +3.5% YoY (vs. +3.8% consensus), and core CPI (ex-food & energy) came in flat MoM at +2.6% YoY (vs. +2.9% prior), the softest core reading since early 2021. The inflation surprise triggered a sharp repricing of Fed tightening risk, with CME FedWatch odds of a July rate hike collapsing from 42% to 17%. Concurrent blockbuster Q2 bank earnings from Goldman Sachs (+9%), Bank of America (+~2%), JPMorgan (+~2%), Citigroup, and Wells Fargo provided an additional risk-on tailwind. Cross-asset signal was mixed: semiconductors surged (SMH ETF +2.5%), oil rose +1.54% (WTI to $79.34/bbl) on U.S.-Iran Strait of Hormuz tensions, gold gained +1.60% to $4,061/oz, and the 10-year U.S. Treasury yield eased near 4.58%.</p>
+    </div>
+  </div>
+
+  <!-- YTD Chart -->
+  <div class="section">
+    <div class="section-header"><h2>YTD Index Performance (Normalized, Base = 100)</h2></div>
+    <div class="chart-wrap"><p style="color:#888">[YTD chart — see live dashboard]</p></div>
+  </div>
+
+  <!-- Major Indices -->
+  <div class="section">
+    <div class="section-header"><h2>Major Equity Indices</h2></div>
+    <div class="section-body" style="padding:0">
+      <table>
+        <thead><tr>
+          <th>Index</th><th>Region</th><th style="text-align:right">Close</th>
+          <th style="text-align:right">1D</th><th style="text-align:right">1W</th>
+          <th style="text-align:right">1M</th><th style="text-align:right">YTD</th><th style="text-align:right">1Y</th>
+        </tr></thead>
+        <tbody><tr>
+<td>S&P 500</td>
+<td style="color:#aaa;font-size:11px">US</td>
+<td style="text-align:right;font-weight:bold">7,543.59</td>
+<td class="pos" style="text-align:right">+0.38%</td>
+<td class="pos" style="text-align:right">+0.08%</td>
+<td class="pos" style="text-align:right">+3.81%</td>
+<td class="pos" style="text-align:right">+10.20%</td>
+<td class="pos" style="text-align:right">+20.82%</td>
+</tr><tr>
+<td>Nasdaq Composite</td>
+<td style="color:#aaa;font-size:11px">US</td>
+<td style="text-align:right;font-weight:bold">26,107.01</td>
+<td class="pos" style="text-align:right">+0.90%</td>
+<td class="neg" style="text-align:right">-0.05%</td>
+<td class="pos" style="text-align:right">+3.72%</td>
+<td class="pos" style="text-align:right">+12.33%</td>
+<td class="pos" style="text-align:right">+26.26%</td>
+</tr><tr>
+<td>STOXX Europe 600</td>
+<td style="color:#aaa;font-size:11px">Europe</td>
+<td style="text-align:right;font-weight:bold">641.99</td>
+<td class="pos" style="text-align:right">+0.15%</td>
+<td class="neg" style="text-align:right">-1.31%</td>
+<td class="pos" style="text-align:right">+1.39%</td>
+<td class="pos" style="text-align:right">+8.30%</td>
+<td class="pos" style="text-align:right">+17.81%</td>
+</tr><tr>
+<td>Nikkei 225</td>
+<td style="color:#aaa;font-size:11px">Japan</td>
+<td style="text-align:right;font-weight:bold">67,746.82</td>
+<td class="pos" style="text-align:right">+0.75%</td>
+<td class="neg" style="text-align:right">-2.85%</td>
+<td class="pos" style="text-align:right">+2.62%</td>
+<td class="pos" style="text-align:right">+34.58%</td>
+<td class="pos" style="text-align:right">+70.74%</td>
+</tr><tr>
+<td>KOSPI</td>
+<td style="color:#aaa;font-size:11px">Korea</td>
+<td style="text-align:right;font-weight:bold">6,836.90</td>
+<td class="pos" style="text-align:right">+0.44%</td>
+<td class="neg" style="text-align:right">-15.08%</td>
+<td class="neg" style="text-align:right">-15.84%</td>
+<td class="pos" style="text-align:right">+62.24%</td>
+<td class="pos" style="text-align:right">+112.64%</td>
+</tr><tr>
+<td>Hang Seng</td>
+<td style="color:#aaa;font-size:11px">HK</td>
+<td style="text-align:right;font-weight:bold">24,340.73</td>
+<td class="pos" style="text-align:right">+0.52%</td>
+<td class="pos" style="text-align:right">+3.07%</td>
+<td class="neg" style="text-align:right">-0.28%</td>
+<td class="neg" style="text-align:right">-5.03%</td>
+<td class="neg" style="text-align:right">-1.01%</td>
+</tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Commodities -->
+  <div class="section">
+    <div class="section-header"><h2>Commodities</h2></div>
+    <div class="section-body" style="padding:0">
+      <table>
+        <thead><tr>
+          <th>Instrument</th><th>Category</th><th style="text-align:right">Close</th>
+          <th style="text-align:right">1D</th><th style="text-align:right">1W</th>
+          <th style="text-align:right">1M</th><th style="text-align:right">YTD</th>
+        </tr></thead>
+        <tbody><tr>
+<td>WTI Crude Oil ($/bbl)</td>
+<td style="color:#aaa;font-size:11px">Energy</td>
+<td style="text-align:right;font-weight:bold">79.3400</td>
+<td class="pos" style="text-align:right">+1.54%</td>
+<td class="pos" style="text-align:right">+12.63%</td>
+<td class="neg" style="text-align:right">-9.54%</td>
+<td class="pos" style="text-align:right">+38.17%</td>
+</tr><tr>
+<td>Gold ($/oz)</td>
+<td style="color:#aaa;font-size:11px">Precious Metals</td>
+<td style="text-align:right;font-weight:bold">4061.1001</td>
+<td class="pos" style="text-align:right">+1.60%</td>
+<td class="neg" style="text-align:right">-2.03%</td>
+<td class="neg" style="text-align:right">-0.71%</td>
+<td class="neg" style="text-align:right">-6.11%</td>
+</tr><tr>
+<td>Silver ($/oz)</td>
+<td style="color:#aaa;font-size:11px">Precious Metals</td>
+<td style="text-align:right;font-weight:bold">58.7720</td>
+<td class="pos" style="text-align:right">+1.97%</td>
+<td class="neg" style="text-align:right">-3.54%</td>
+<td class="neg" style="text-align:right">-8.00%</td>
+<td class="neg" style="text-align:right">-16.20%</td>
+</tr><tr>
+<td>Copper ($/lb)</td>
+<td style="color:#aaa;font-size:11px">Industrial</td>
+<td style="text-align:right;font-weight:bold">6.3300</td>
+<td class="pos" style="text-align:right">+1.56%</td>
+<td class="pos" style="text-align:right">+2.57%</td>
+<td class="pos" style="text-align:right">+1.13%</td>
+<td class="pos" style="text-align:right">+12.43%</td>
+</tr><tr>
+<td>Aluminium ($/MT)</td>
+<td style="color:#aaa;font-size:11px">Industrial</td>
+<td style="text-align:right;font-weight:bold">3,448.00</td>
+<td class="pos" style="text-align:right">+0.58%</td>
+<td class="neg" style="text-align:right">-1.59%</td>
+<td class="neg" style="text-align:right">-9.13%</td>
+<td class="pos" style="text-align:right">+18.64%</td>
+</tr><tr>
+<td>Nickel Index (proxy)</td>
+<td style="color:#aaa;font-size:11px">Industrial</td>
+<td style="text-align:right;font-weight:bold">268.3943</td>
+<td class="pos" style="text-align:right">+0.25%</td>
+<td class="pos" style="text-align:right">+3.47%</td>
+<td class="neg" style="text-align:right">-7.01%</td>
+<td class="pos" style="text-align:right">+0.73%</td>
+</tr><tr>
+<td>Platinum ($/oz)</td>
+<td style="color:#aaa;font-size:11px">Precious Metals</td>
+<td style="text-align:right;font-weight:bold">1631.5000</td>
+<td class="pos" style="text-align:right">+1.83%</td>
+<td class="neg" style="text-align:right">-1.19%</td>
+<td class="neg" style="text-align:right">-1.87%</td>
+<td class="neg" style="text-align:right">-19.81%</td>
+</tr><tr>
+<td>Corn (¢/bu)</td>
+<td style="color:#aaa;font-size:11px">Agri</td>
+<td style="text-align:right;font-weight:bold">433.7500</td>
+<td class="neg" style="text-align:right">-0.91%</td>
+<td class="neg" style="text-align:right">-1.98%</td>
+<td class="pos" style="text-align:right">+5.34%</td>
+<td class="neg" style="text-align:right">-1.48%</td>
+</tr><tr>
+<td>Wheat (¢/bu)</td>
+<td style="color:#aaa;font-size:11px">Agri</td>
+<td style="text-align:right;font-weight:bold">631.2500</td>
+<td class="pos" style="text-align:right">+0.68%</td>
+<td class="pos" style="text-align:right">+3.61%</td>
+<td class="pos" style="text-align:right">+7.58%</td>
+<td class="pos" style="text-align:right">+24.51%</td>
+</tr><tr>
+<td>Rough Rice ($/cwt)</td>
+<td style="color:#aaa;font-size:11px">Agri</td>
+<td style="text-align:right;font-weight:bold">13.1500</td>
+<td class="neg" style="text-align:right">-0.15%</td>
+<td class="neg" style="text-align:right">-0.49%</td>
+<td class="pos" style="text-align:right">+7.74%</td>
+<td class="pos" style="text-align:right">+37.05%</td>
+</tr><tr>
+<td>Soybeans (¢/bu)</td>
+<td style="color:#aaa;font-size:11px">Agri</td>
+<td style="text-align:right;font-weight:bold">1207.2500</td>
+<td class="pos" style="text-align:right">+0.44%</td>
+<td class="pos" style="text-align:right">+0.88%</td>
+<td class="pos" style="text-align:right">+8.27%</td>
+<td class="pos" style="text-align:right">+17.15%</td>
+</tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Sector Performance -->
+  <div class="section">
+    <div class="section-header"><h2>Sector &amp; Industry Overview</h2></div>
+    <div class="section-body" style="padding:0 0 0 0">
+      <table>
+        <thead><tr>
+          <th>Sector</th><th style="text-align:right">1D Chg</th><th>Commentary</th>
+        </tr></thead>
+        <tbody><tr>
+<td>Technology</td>
+<td class="pos">+1.8%</td>
+<td>Semiconductor rebound led by Micron (+5%), Lam Research (+5%), Nvidia (+4%); SMH ETF +2.5% reversing Monday's -4.8% selloff.</td>
+</tr><tr>
+<td>Financial Services</td>
+<td class="pos">+1.2%</td>
+<td>Goldman Sachs surged ~9% on record Q2 EPS of $20.98 vs. $14.48 est.; JPMorgan +~2.5%, BofA +~2% on broad Q2 beats.</td>
+</tr><tr>
+<td>Energy</td>
+<td class="pos">+1.3%</td>
+<td>WTI +1.54% to $79.34/bbl on U.S.-Iran Strait of Hormuz tensions; four refinery stocks hit all-time highs.</td>
+</tr><tr>
+<td>Basic Materials</td>
+<td class="pos">+0.8%</td>
+<td>Copper +1.56%, Silver +1.97%; European basic resources gained 2.4%; BASF raised forecasts.</td>
+</tr><tr>
+<td>Industrials</td>
+<td class="pos">+0.5%</td>
+<td>Broadly positive on CPI relief; no single-stock catalyst; strongest YTD sector at +47.77%.</td>
+</tr><tr>
+<td>Utilities</td>
+<td class="pos">+0.3%</td>
+<td>Bond-proxy bid as 10-year Treasury yield eased near 4.58% following CPI miss.</td>
+</tr><tr>
+<td>Real Estate</td>
+<td class="pos">+0.2%</td>
+<td>Marginal gains on lower yield backdrop; no specific REIT catalyst.</td>
+</tr><tr>
+<td>Consumer Defensive</td>
+<td class="pos">+0.2%</td>
+<td>Defensive sector saw mild gains; no specific catalyst.</td>
+</tr><tr>
+<td>Communication Services</td>
+<td class="neg">-0.3%</td>
+<td>IBM's historic -25.37% decline weighed heavily; subtracted ~425 Dow points; Meta/Alphabet broadly flat.</td>
+</tr><tr>
+<td>Consumer Cyclical</td>
+<td class="neg">-0.2%</td>
+<td>Nike -2.06% among notable laggards; consumer spending uncertainty persists with CPI still at 3.5%.</td>
+</tr><tr>
+<td>Healthcare</td>
+<td class="neg">-0.5%</td>
+<td>Merck -2.60%; Elevance Health margin pressure weighed on insurers; sector underperformed.</td>
+</tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Macro Events -->
+  <div class="section">
+    <div class="section-header"><h2>Macroeconomic Events</h2></div>
+    <div class="section-body">
+      <div class="macro-sup">
+        <p><strong>June 2026 CPI</strong> — released 8:30 AM ET, July 14, 2026 (BLS USDL-26-1191). Headline CPI fell <strong>-0.4% MoM</strong> — the largest monthly drop since April 2020 — bringing the 12-month rate to <strong>3.5%</strong> (vs. 3.8% consensus). Core CPI (ex-food &amp; energy) was <strong>flat MoM at 0.0%</strong>, the softest reading since January 2021, with the 12-month rate slowing to <strong>2.6%</strong> (vs. 2.8% est., 2.9% prior). Energy drove the monthly decline (energy index -5.7% MoM; gasoline -9.7% MoM). Shelter rose only +0.1% MoM, the smallest monthly move since January 2021. No other major U.S. data releases on July 14. Next: June PPI due Wednesday, July 15, 2026 (consensus ~+6.4% YoY).</p>
+      </div>
+      <table>
+        <thead><tr>
+          <th>Indicator</th><th>Period</th><th>Actual</th><th>Estimate</th><th>Prior</th><th>Source</th>
+        </tr></thead>
+        <tbody><tr>
+<td>CPI (Headline) MoM</td>
+<td>June 2026</td>
+<td class="pos">-0.4%</td>
+<td>-0.2%</td>
+<td>+0.5%</td>
+<td><a href="https://www.bls.gov/news.release/cpi.nr0.htm" target="_blank" style="color:#b8a060">BLS</a></td>
+</tr><tr>
+<td>CPI (Headline) YoY</td>
+<td>June 2026</td>
+<td class="neutral">3.5%</td>
+<td>3.8%</td>
+<td>4.2%</td>
+<td><a href="https://www.bls.gov/news.release/cpi.nr0.htm" target="_blank" style="color:#b8a060">BLS</a></td>
+</tr><tr>
+<td>Core CPI MoM (ex-Food & Energy)</td>
+<td>June 2026</td>
+<td class="neutral">0.0%</td>
+<td>+0.2%</td>
+<td>+0.2%</td>
+<td><a href="https://www.bls.gov/news.release/cpi.nr0.htm" target="_blank" style="color:#b8a060">BLS</a></td>
+</tr><tr>
+<td>Core CPI YoY</td>
+<td>June 2026</td>
+<td class="neutral">2.6%</td>
+<td>2.8%</td>
+<td>2.9%</td>
+<td><a href="https://tradingeconomics.com/united-states/core-inflation-rate" target="_blank" style="color:#b8a060">BLS / TradingEconomics</a></td>
+</tr><tr>
+<td>Core PCE YoY (estimate from CPI)</td>
+<td>June 2026</td>
+<td class="neutral">~3.3%</td>
+<td>~3.4%</td>
+<td>3.4%</td>
+<td><a href="https://www.reuters.com/business/us-consumer-inflation-slows-more-than-expected-june-2026-07-14/" target="_blank" style="color:#b8a060">Reuters</a></td>
+</tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Attention Items -->
+  <div class="section">
+    <div class="section-header"><h2>Cross-Cutting Issues &amp; Attention Items</h2></div>
+    <div class="section-body">
+      <div class="attention-item"><h4>2. IBM Earnings Warning: Enterprise IT Spending Pivot to AI Infrastructure</h4><p>IBM's -25% single-session collapse — its worst decline since 1987 on a scale of -25.37% — signals a structural inflection in enterprise IT spending patterns. CEO Arvind Krishna explicitly stated that enterprise clients are shifting capital expenditure from mainframes (Z-series) and legacy software stacks toward AI infrastructure. IBM's Q2 revenue of $17.2B (+1% YoY) was $600M below consensus, with infrastructure revenue down -7%. This has broader implications: legacy software vendors (SAP, Oracle), IT services firms, and traditional enterprise hardware players may face analogous spending pressure as the AI infrastructure buildout accelerates. Conversely, the shift reinforces the investment thesis for AI chip makers (Nvidia, AMD, ASML) and AI-native cloud hyperscalers. Sources: CNBC, MarketWatch, IBM newsroom letter (July 14, 2026).</p></div><div class="attention-item"><h4>3. Fed Chair Warsh Debut Congressional Testimony and Rate Path Uncertainty</h4><p>Kevin Warsh, the newly installed Fed Chair, made his first congressional appearance before the House Financial Services Committee on July 14. His messaging was tactically dovish ("inflation will be a thing of the past") but structurally hawkish, signaling continued vigilance on the balance sheet and rates. Markets remain priced for one additional 25bp hike — likely September — despite today's CPI miss. The Fed's next FOMC meeting is July 29–30 (rate decision July 30); the June PCE data (due July 31) will be critical to confirming or reversing the dovish repricing. Any upside surprise in Wednesday's PPI or forward guidance from Warsh in Senate testimony (expected) could re-accelerate rate hike pricing. Source: CNBC, Edward Jones (July 14, 2026).</p></div><div class="attention-item"><h4>4. Q2 Bank Earnings Season: AI Mega-Deals Driving Investment Banking Recovery</h4><p>Goldman Sachs, JPMorgan, BofA, Citi, and Wells Fargo all reported Q2 beats. Goldman's 78% surge in net income (+78% YoY to a record quarter) and JPMorgan's $58B in revenue were notably powered by investment banking fee recovery, with bank CEOs (Dimon, Solomon) citing AI mega-deals — including SpaceX financings and large AI infrastructure debt issuances — as key pipeline drivers. S&P 500 Q2 earnings growth is now forecast at 21% YoY (Edward Jones/FactSet), with energy companies (highest oil prices in years) and technology among the top contributors. Healthcare insurer margin pressure (Elevance Health) is the counterweight to watch. Sources: CNBC live blog (July 14, 2026), NYT (July 14, 2026), Edward Jones daily recap.</p></div>
+    </div>
+  </div>
+
+  <!-- Sources -->
+  <div class="section">
+    <div class="section-header"><h2>Sources</h2></div>
+    <div class="section-body">
+      <ol class="sources-list"><li>[1] <a href="https://www.cnbc.com/amp/2026/07/13/stock-market-today-live-updates.html" target="_blank" style="color:#b8a060">CNBC — July 14 Market Live Updates</a></li><li>[2] <a href="https://finance.yahoo.com/markets/live/stock-market-today-tuesday-july-14-dow-sp-500-nasdaq-070833816.html" target="_blank" style="color:#b8a060">Yahoo Finance — Stock Market Today July 14</a></li><li>[3] <a href="https://www.bls.gov/news.release/cpi.nr0.htm" target="_blank" style="color:#b8a060">BLS — June 2026 CPI Summary (USDL-26-1191)</a></li><li>[4] <a href="https://tradingeconomics.com/united-states/core-inflation-rate" target="_blank" style="color:#b8a060">TradingEconomics — US Core Inflation Rate</a></li><li>[5] <a href="https://www.reuters.com/business/us-consumer-inflation-slows-more-than-expected-june-2026-07-14/" target="_blank" style="color:#b8a060">Reuters — US consumer inflation slows more than expected, June 2026</a></li><li>[6] <a href="https://www.cnbc.com/2026/07/14/ibm-warns-second-quarter-earnings-fell-short-of-expectations.html" target="_blank" style="color:#b8a060">CNBC — IBM warns Q2 profits will be lower</a></li><li>[7] <a href="https://www.marketwatch.com/story/ibms-stock-dives-toward-worst-day-in-nearly-40-years-after-the-surprise-release-of-an-earnings-miss-8519741e" target="_blank" style="color:#b8a060">MarketWatch — IBM stock dives</a></li><li>[8] <a href="https://www.cnbc.com/2026/07/14/jpm-bank-of-america-citi-bank-earnings-live-updates.html" target="_blank" style="color:#b8a060">CNBC — Bank earnings live blog (JPM, BofA, Citi, Goldman)</a></li><li>[9] <a href="https://www.nytimes.com/2026/07/14/business/jpmorgan-goldman-bofa-wells-fargo-bank-earnings.html" target="_blank" style="color:#b8a060">NYT — Big Banks Smash Earnings Records</a></li><li>[10] <a href="https://www.cnbc.com/2026/07/14/oil-prices-today-brent-wti-hormuz-trump-toll-iran.html" target="_blank" style="color:#b8a060">CNBC — Oil prices, Hormuz blockade, Trump tolls</a></li><li>[11] <a href="https://www.edwardjones.com/us-en/market-news-insights/stock-market-news/daily-market-recap" target="_blank" style="color:#b8a060">Edward Jones — Daily Market Recap July 14</a></li><li>[12] <a href="https://www.barrons.com/livecoverage/stock-market-news-today-071426?eafs_enabled=false" target="_blank" style="color:#b8a060">Barron's — Nasdaq and S&P 500 rise after inflation cools</a></li><li>[13] <a href="https://tradingeconomics.com/united-states/stock-market" target="_blank" style="color:#b8a060">TradingEconomics — S&P 500 July 14 movers</a></li></ol>
+    </div>
+  </div>
+
+  <div class="footer">
+    Generated by workflow · Global Markets Brief · Report Date: 2026-07-14 · Generated: 2026-07-15 11:38 UTC
+  </div>
+
+</div>
+</body>
+</html>
