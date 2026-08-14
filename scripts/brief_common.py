@@ -7,6 +7,7 @@ render into brief.html, and archive the outgoing brief under the right
 category ("daily" or "weekly") in archive.html.
 """
 import json
+import os
 import re
 from datetime import datetime, timezone
 from pathlib import Path
@@ -262,7 +263,18 @@ BRIEF_TOOL = {
 
 def call_claude(period_label, period_noun, movers_noun, stats, best, worst):
     """period_noun: '이번 주' or '오늘'. movers_noun: '주간' or '당일'."""
-    client = anthropic.Anthropic()
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        raise RuntimeError(
+            "ANTHROPIC_API_KEY is not set. In GitHub: Settings -> Secrets and "
+            "variables -> Actions -> New repository secret -> name it exactly "
+            "ANTHROPIC_API_KEY and paste a valid key from console.anthropic.com. "
+            "The workflow already forwards this secret into the environment "
+            "(see .github/workflows/daily-brief.yml / weekly-brief.yml); if it's "
+            "still missing here, the secret hasn't been created (or was created "
+            "under a different name/repo) yet."
+        )
+    client = anthropic.Anthropic(api_key=api_key)
 
     index_lines = "\n".join(
         f"- {ASSET_META[k]['name']}: 종가 {stats[k]['last']:.2f}, 1일 {fmt_pct(stats[k]['pct1D'])}, "
